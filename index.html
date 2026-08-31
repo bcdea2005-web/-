@@ -18,10 +18,16 @@
       appId: "1:815355735094:web:8d638a73d58be805163c97",
       measurementId: "G-ETSCXQMZ48"
     };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const analytics = firebase.analytics();
-    console.log("Firebase initialized successfully");
+    // Initialize Firebase if loaded
+    if(typeof firebase !== 'undefined' && firebase.initializeApp){
+      try {
+        firebase.initializeApp(firebaseConfig);
+        if(firebase.analytics) firebase.analytics();
+        console.log("Firebase initialized successfully");
+      } catch(e) {
+        console.warn("Firebase init error:", e);
+      }
+    }
   </script>
   <script>
 // WebView2 UMD guard: temporarily remove exports/module/define so SheetJS
@@ -175,6 +181,25 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     .custom-item-row {display:flex;align-items:center;gap:12px;padding:10px;background:#fcfaf5;border-radius:10px;margin-bottom:8px;border:1px solid #f0ece5}
 
     @media(max-width:1050px){.stats,.report-cards{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}@media(min-width:761px){.sidebar.open{transform:translateX(100%)}.sidebar.open~.main{margin-right:0}}@media(max-width:760px){.sidebar{transform:translateX(100%)}.sidebar.open{transform:none}.overlay{position:fixed;inset:0;z-index:19;background:#0007}.sidebar.open+.overlay{display:block}.main{margin-right:0}.topbar{padding:0 16px}.menu{display:grid}.status,.profile-copy{display:none}.content{padding:23px 16px 45px}.heading{align-items:stretch;flex-direction:column;gap:15px}.heading .primary{width:100%}.hero{padding:26px 22px}.form-grid,.detail-grid,.report-cards{grid-template-columns:1fr}.form-panel{padding:18px}.form-footer{align-items:stretch;flex-direction:column-reverse}.form-footer .button-row{width:100%}.form-footer button{flex:1}.toolbar{align-items:stretch;flex-direction:column}.toolbar input,.toolbar select{width:100%}}@media print{.sidebar,.topbar,.button-row,.toast,.toolbar,.heading .primary,.report-tabs{display:none!important}.main{margin:0}.content{padding:0}.panel,.stat,.report-card{border:0;box-shadow:none}}
+  
+    .locked-value{display:inline-block;padding:2px 8px;border-radius:6px;background:#ece6da;color:var(--muted);font-size:11px;font-weight:700}
+    .dyn-list{display:grid;gap:8px;margin-bottom:10px}
+    .dyn-input,.dyn-key,.dyn-val{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#fff;color:var(--ink);height:40px}
+    #dashSearchResults{display:none;margin-top:15px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;max-height:350px;overflow-y:auto;color:var(--ink);text-align:right}
+    #dashSearchResults.active{display:block}
+    .dash-search-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);transition:background 0.2s}
+    .dash-search-item:hover{background:#fcfaf5}
+    .dash-search-item:last-child{border-bottom:0}
+    .dash-search-main{min-width:0;flex:1}
+    .dash-search-main strong{display:block;font-size:13px;color:var(--ink)}
+    .dash-search-main span{display:block;margin-top:2px;font-size:11px;color:var(--muted)}
+    .bell-dot{display:none;position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:#e53e3e;box-shadow:0 0 5px #e53e3e}
+    .notification-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:8px;border:1px solid var(--line)}
+    .notification-item.low-stock{background:#fff5f5;border-color:#fed7d7;color:#9b2c2c}
+    .notification-item.debt{background:#ebf8ff;border-color:#bee3f8;color:#2b6cb0}
+    .notification-item.lab{background:#fffaf0;border-color:#feebc8;color:#c05621}
+    .badge.green{background:#e6f4ea;color:var(--green)}
+
   </style>
 </head>
 <body>
@@ -196,8 +221,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       <button data-view="visits"><span class="nav-icon">◷</span>سجل الزيارات</button>
       <button data-view="patients"><span class="nav-icon">♙</span>دليل المرضى</button>
       <button data-view="reports"><span class="nav-icon">▥</span>التقرير الشامل والأداء</button>
-      <button data-action="backup"><span class="nav-icon">⇩</span>حفظ نسخة احتياطية</button>
-      <button data-action="restore"><span class="nav-icon">⇧</span>استعادة نسخة</button>
+      <button data-action="backup"><span class="nav-icon">⇩</span>حفظ نسخة احتياطية (JSON)</button>
+      <button data-action="restore"><span class="nav-icon">⇧</span>استعادة نسخة (JSON)</button>
       <button data-action="admin"><span class="nav-icon">▣</span><span data-admin-label>دخول المدير</span></button>
     </nav>
   </aside>
@@ -209,19 +234,20 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         <div class="admin-badge-indicator"><span>👑</span>وضع المدير مفعّل</div>
       </div>
       <div class="top-actions">
-        <button class="icon-btn" data-action="notifications" aria-label="الإشعارات">♢<span class="bell-dot"></span></button>
-        <div class="profile">
+        <button class="icon-btn" data-action="notifications" aria-label="الإشعارات" title="الإشعارات والتنبيهات السريرية">🔔<span class="bell-dot" id="bellDot"></span></button>
+        <div class="profile" id="userProfileInfo" title="الحساب والوردية (اضغط لتسجيل الخروج)" style="cursor:pointer">
           <div class="profile-copy">
             <strong id="userRoleTitle">موظف الاستقبال</strong>
             <span id="userRoleSubtitle">الوردية الصباحية</span>
           </div>
-          <div class="avatar" id="userAvatar">م</div>
+          <div class="avatar" id="userAvatar">ص</div>
         </div>
+        <button type="button" class="secondary" id="roleLogoutBtn" style="padding:8px 14px;font-size:12px;border-radius:10px" title="تسجيل الخروج من الحساب الحالي">خروج ⎋</button>
       </div>
     </header>
     <main class="content" id="content"></main>
   </div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div><input id="restore" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hidden">
+  <div class="toast" id="toast" role="status" aria-live="polite"></div><input id="restore" type="file" accept=".json,application/json,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hidden">
   
   <div id="adminModal" class="modal-overlay hidden">
     <div class="modal-card">
@@ -307,7 +333,24 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     </div>
   </div>
 
+  
+  <!-- نافذة الإشعارات والتنبيهات السريرية -->
+  <div id="notificationModal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width:560px">
+      <div class="modal-head">
+        <h3 style="display:flex;align-items:center;gap:8px">🔔 مركز الإشعارات والتنبيهات السريرية</h3>
+        <button type="button" class="icon-btn" id="closeNotificationBtn" style="border:0;background:transparent;font-size:18px;cursor:pointer" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="modal-body" id="notificationModalBody" style="max-height:70vh;overflow-y:auto;padding:20px;display:grid;gap:14px">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="primary" id="dismissNotificationBtn">تم الاطلاع</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+
     "use strict";
     const PATIENTS_KEY="oras-dental-patients-v3", VISITS_KEY="oras-dental-visits-v3", ADMIN_KEY="oras-dental-admin-v1", PROCEDURES_KEY="oras-dental-procedures-v1", LISTS_KEY="oras-dental-lists-v1", EXPENSES_KEY="oras-dental-expenses-v1", INVENTORY_KEY="oras-dental-inv-v1", LABS_KEY="oras-dental-labs-v1", SERVER_IP_KEY="oras-dental-server-ip", MONTHLY_KEY="oras-dental-monthly-reports-v1", today=new Date().toISOString().slice(0,10);
     const ARABIC_MONTHS=["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
@@ -395,6 +438,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
     async function save(){
       saveLocal();
+      updateNotificationBadge();
     }
 
     // تم تعطيل المزامنة الشبكية — يعمل النظام محلياً بالكامل
@@ -536,7 +580,99 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     function fallbackHash(value){let hash=2166136261;for(let i=0;i<value.length;i++)hash=Math.imul(hash^value.charCodeAt(i),16777619);return String(hash>>>0)}
     async function hashPassword(value){if(window.crypto?.subtle){const data=await window.crypto.subtle.digest("SHA-256",new TextEncoder().encode(value));return [...new Uint8Array(data)].map(x=>x.toString(16).padStart(2,"0")).join("")}return fallbackHash(value)}
     
+    
+    function updateNotificationBadge(){
+      const lowInv = inventory.filter(i => Number(i.qty) <= Number(i.minQty));
+      const debts = visits.filter(v => Number(v.due || 0) > 0);
+      const pendingLabs = labs.filter(l => l.status === "قيد التصنيع" || l.status === "تم الإرسال");
+      const hasAlerts = (lowInv.length + debts.length + pendingLabs.length) > 0;
+      const dot = document.getElementById("bellDot");
+      if(dot) dot.style.display = hasAlerts ? "block" : "none";
+    }
+
+    function openNotificationModal(){
+      const lowInv = inventory.filter(i => Number(i.qty) <= Number(i.minQty));
+      const debts = visits.filter(v => Number(v.due || 0) > 0);
+      const totalDebt = debts.reduce((sum, v) => sum + Number(v.due || 0), 0);
+      const pendingLabs = labs.filter(l => l.status === "قيد التصنيع" || l.status === "تم الإرسال");
+      const todayVisits = visits.filter(v => v.date === today);
+
+      let html = `
+        <div class="stats" style="grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:5px">
+          <div class="stat" style="padding:14px">
+            <div class="stat-label">زيارات اليوم (${today})</div>
+            <div class="stat-number" style="font-size:22px;color:var(--gold-dark)">${todayVisits.length} زيارة</div>
+          </div>
+          <div class="stat" style="padding:14px">
+            <div class="stat-label">إجمالي الديون المعلقة</div>
+            <div class="stat-number" style="font-size:22px;color:var(--red)">${money(totalDebt)}</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <strong style="color:var(--red);display:flex;align-items:center;gap:6px">⚠️ تنبيهات نقص المخزون (${lowInv.length})</strong>
+            <button class="link-btn" data-view="inventory" style="font-size:11px">فتح المخزون ←</button>
+          </div>
+          ${lowInv.length ? `
+            <div style="display:grid;gap:8px">
+              ${lowInv.map(i => `
+                <div class="notification-item low-stock">
+                  <span><strong>${esc(i.name)}</strong> (المتبقي: ${esc(i.qty)} ${esc(i.unit)})</span>
+                  <span class="badge red">حد الأمان: ${esc(i.minQty)}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : `<div style="font-size:12px;color:var(--green)">✓ جميع المواد متوفرة بكميات كافية وأعلى من حد الأمان.</div>`}
+        </div>
+
+        <div style="border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <strong style="color:var(--gold-dark);display:flex;align-items:center;gap:6px">🦷 طلبات المعامل قيد الإنجاز (${pendingLabs.length})</strong>
+            <button class="link-btn" data-view="labs" style="font-size:11px">سجل المعامل ←</button>
+          </div>
+          ${pendingLabs.length ? `
+            <div style="display:grid;gap:8px">
+              ${pendingLabs.map(l => `
+                <div class="notification-item lab">
+                  <span><strong>${esc(l.patientName)}</strong> - ${esc(l.workType)} (${esc(l.labName)})</span>
+                  <span class="badge gold">${esc(l.status)}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : `<div style="font-size:12px;color:var(--muted)">لا توجد طلبات معمل معلقة حالياً.</div>`}
+        </div>
+
+        <div style="border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <strong style="color:var(--blue);display:flex;align-items:center;gap:6px">💸 مستحقات غير مسددة (${debts.length})</strong>
+            <button class="link-btn" data-view="visits" style="font-size:11px">سجل الزيارات ←</button>
+          </div>
+          ${debts.length ? `
+            <div style="display:grid;gap:8px;max-height:160px;overflow-y:auto">
+              ${debts.slice(0, 10).map(v => `
+                <div class="notification-item debt">
+                  <span><strong>${esc(v.patientName || "مريض")}</strong> (${date(v.date)})</span>
+                  <span style="font-weight:bold;color:var(--red)">${money(v.due)}</span>
+                </div>
+              `).join('')}
+              ${debts.length > 10 ? `<div style="text-align:center;font-size:11px;color:var(--muted)">و ${debts.length - 10} حالات أخرى...</div>` : ''}
+            </div>
+          ` : `<div style="font-size:12px;color:var(--green)">✓ لا توجد ديون معلقة مسجلة.</div>`}
+        </div>
+      `;
+
+      const body = document.getElementById("notificationModalBody");
+      if(body) body.innerHTML = html;
+      document.getElementById("notificationModal")?.classList.remove("hidden");
+    }
+
+    function closeNotificationModal(){
+      document.getElementById("notificationModal")?.classList.add("hidden");
+    }
+
     function updateSecurityUI(){
+      updateNotificationBadge();
       const label=document.querySelector("[data-admin-label]");
       if(label)label.textContent=adminUnlocked?"خروج المدير":"دخول المدير";
       const roleTitle = document.getElementById("userRoleTitle");
@@ -737,30 +873,31 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     function button(label,action,id,cls="secondary"){return`<button class="${cls}" data-action="${action}" data-id="${esc(id||"")}">${label}</button>`}
     function card(label,num,name,ico){return`<div class="stat"><div class="stat-top"><div class="stat-icon">${ico}</div><span class="stat-label">${label}</span></div><div class="stat-number">${num}</div><p class="stat-name">${name}</p></div>`}
     /* حفظ ملف من Blob بأسلوب متوافق مع المتصفحات و WebView2 وبيئات مقيّدة */
-    async function saveBlob(blob, filename){
-      // 1) WebView2 / Edge قديم / IE
+        async function saveBlob(blob, filename, mimeType = "application/json"){
       if(window.navigator && typeof window.navigator.msSaveOrOpenBlob === "function"){
         window.navigator.msSaveOrOpenBlob(blob, filename);
         return true;
       }
-      // 2) واجهة الوصول إلى الملفات (Chrome/Edge الحديثة)
       if(typeof window.showSaveFilePicker === "function"){
         try{
+          const isJson = filename.endsWith(".json");
           const handle = await window.showSaveFilePicker({
             suggestedName: filename,
-            types: [{description: 'Excel files (xlsx)', accept: {'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']}}]
+            types: isJson ? [
+              { description: 'ملف JSON للنسخ الاحتياطي (*.json)', accept: { 'application/json': ['.json'] } }
+            ] : [
+              { description: 'ملف Excel (*.xlsx)', accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] } }
+            ]
           });
           const writable = await handle.createWritable();
           await writable.write(blob);
           await writable.close();
           return true;
         } catch(err){
-          if(err && err.name === "AbortError") return true; // ألغى المستخدم
-          console.error("showSaveFilePicker فشل:", err);
-          // نستمر إلى طريقة التنزيل القياسية
+          if(err && err.name === "AbortError") return false;
+          console.warn("showSaveFilePicker fallback:", err);
         }
       }
-      // 3) تنزيل عبر عنصر <a download>
       try{
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -771,12 +908,11 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
         return true;
       } catch(err){
-        console.error("anchor download فشل:", err);
+        console.error("download failed:", err);
       }
-      // 4) آخر حل: فتح الملف في تبويب جديد
       try{
         const url = URL.createObjectURL(blob);
         const win = window.open(url, "_blank");
@@ -784,9 +920,55 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         else URL.revokeObjectURL(url);
         return true;
       } catch(err){
-        console.error("window.open فشل:", err);
+        console.error("window.open failed:", err);
       }
       return false;
+    }
+
+    async function backupToJSON(){
+      try {
+        const backupData = {
+          appName: "ORAS Dental Clinic",
+          systemVersion: "3.0",
+          backupDate: new Date().toISOString(),
+          exportDateFormatted: today,
+          meta: {
+            totalPatients: patients.length,
+            totalVisits: visits.length,
+            totalExpenses: expenses.length,
+            totalInventory: inventory.length,
+            totalLabs: labs.length,
+            totalMonthlyReports: monthlyReports.length,
+            totalCustomLists: customLists.length,
+            totalProcedures: procedures.length
+          },
+          data: {
+            patients,
+            visits,
+            procedures,
+            customLists,
+            expenses,
+            inventory,
+            labs,
+            monthlyReports
+          },
+          settings: {
+            theme: theme || "default"
+          }
+        };
+
+        const jsonStr = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonStr], { type: "application/json;charset=utf-8" });
+        const filename = `oras-backup-${today}.json`;
+
+        const saved = await saveBlob(blob, filename, "application/json");
+        if(saved){
+          message("تم تصدير النسخة الاحتياطية بنجاح بصيغة JSON.");
+        }
+      } catch(err) {
+        console.error("Backup error:", err);
+        message("فشل تصدير النسخة الاحتياطية: " + err.message);
+      }
     }
     function getPatient(id){return patients.find(p=>p.id===id)}
     function getPatientVisits(id){return getVisibleVisits().filter(v=>v.patientId===id).sort((a,b)=>b.date.localeCompare(a.date))}
@@ -798,14 +980,73 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       return`<div class="visit-row"><div class="initial">${esc(letter(name))}</div><div class="row-main"><strong>${value(name)} · زيارة (${value(v.visitNum||"1")}) · ${value(visitProcedureNames(v))}</strong><span>${date(v.date)} (${value(v.shift||"صباح")}) · الطبيب: ${value(v.doctor||"د. عثمان")} · الشكوى: ${value(v.mainComplaint)}</span></div><div class="row-meta">${displayCost(v.cost)}<br><span class="badge ${v.status==='ملغاة'?'red':''}">${value(v.status||"مكتملة")}</span></div>${showActions && p ?button("فتح الملف","open-patient",v.patientId,"icon-btn"):""}</div>`
     }
     
+    
+    function renderDashSearchResults(query){
+      const container = document.getElementById("dashSearchResults");
+      if(!container) return;
+      const q = query.trim().toLowerCase();
+      if(!q){
+        container.innerHTML = "";
+        container.classList.remove("active");
+        return;
+      }
+      const matchedPatients = patients.filter(p => (p.fullName||"").toLowerCase().includes(q) || (p.file||"").includes(q) || (p.phone||"").includes(q)).slice(0, 5);
+      const matchedVisits = getVisibleVisits().filter(v => (v.patientName||"").toLowerCase().includes(q) || (v.mainComplaint||"").toLowerCase().includes(q) || (v.doctor||"").toLowerCase().includes(q)).slice(0, 5);
+
+      if(!matchedPatients.length && !matchedVisits.length){
+        container.innerHTML = `<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">لا توجد نتائج مطابقة لبحثك: "${esc(query)}"</div>`;
+        container.classList.add("active");
+        return;
+      }
+
+      let html = "";
+      if(matchedPatients.length){
+        html += `<div style="padding:8px 16px;background:#fcfaf5;font-size:11px;font-weight:bold;color:var(--gold-dark);border-bottom:1px solid var(--line)">👤 المرضى (${matchedPatients.length})</div>`;
+        matchedPatients.forEach(p => {
+          html += `
+            <div class="dash-search-item">
+              <div class="dash-search-main">
+                <strong>${esc(p.fullName)} (#${esc(p.file)})</strong>
+                <span>📱 ${esc(p.phone||"بدون هاتف")} | 📍 ${esc(p.address||"")}</span>
+              </div>
+              <div class="button-row">
+                <button class="secondary" data-action="open-patient" data-id="${p.id}" style="padding:6px 12px;font-size:12px">فتح الملف</button>
+                <button class="primary" data-action="new-visit-for" data-id="${p.id}" style="padding:6px 12px;font-size:12px">تسجيل زيارة</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if(matchedVisits.length){
+        html += `<div style="padding:8px 16px;background:#fcfaf5;font-size:11px;font-weight:bold;color:var(--gold-dark);border-bottom:1px solid var(--line)">◷ الزيارات (${matchedVisits.length})</div>`;
+        matchedVisits.forEach(v => {
+          html += `
+            <div class="dash-search-item">
+              <div class="dash-search-main">
+                <strong>${esc(v.patientName || "مريض")}</strong>
+                <span>${esc(v.mainComplaint||"")} (${date(v.date)}) - ${esc(v.doctor||"")}</span>
+              </div>
+              <div class="button-row">
+                <button class="secondary" data-action="edit-visit" data-id="${v.id}" style="padding:6px 12px;font-size:12px">تعديل الزيارة</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      container.innerHTML = html;
+      container.classList.add("active");
+    }
+
     function dashboard(){
       const activeVisits = getVisibleVisits();
       const recent=[...activeVisits].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
       const totalDue = activeVisits.reduce((s,v)=>s+Number(v.due||0),0);
-      return`<section class="view"><div class="heading"><div><p class="eyebrow">لوحة إدارة عيادة الأسنان</p><h1>أهلاً بك، إدارة العيادة</h1><p class="sub">متابعة شاملة للأداء المالي، حركة المرضى، والمخزون بكفاءة عالية.</p></div><div class="button-row"><button class="secondary" data-view="reports">التقرير الشامل والأداء</button><button class="primary" data-view="new-visit">＋ تسجيل زيارة</button></div></div><div class="hero"><div class="hero-inner"><p class="eyebrow">بحث سريع</p><h2>ابحث في سجلات العيادة، المرضى، أو المواعيد</h2><p>ادخل اسم المريض، الجوال، أو رقم الملف للوصول السريع للسجل الطبي والزيارات.</p><div class="search"><span>⌕</span><input id="dashSearch" placeholder="اكتب اسم المريض، رقم الملف، أو الهاتف..."></div></div></div><div class="stats">${card("إجمالي المرضى",patients.length,"السجلات المحفوظة","♙")}${card("الزيارات المسجلة",activeVisits.length,"إجمالي الحالات المتاحة","◷")}${card("إجمالي الديون المعلقة",displayCost(totalDue),"مستحقات عند المرضى","💸")}${card("تنبيهات المخزون",inventory.filter(i=>i.qty<=i.minQty).length,"مواد أوشكت على النفاد","📦")}</div><div class="two-col"><section class="panel"><div class="panel-head"><div><h2>أحدث الزيارات والأبحاث</h2><p>آخر الإجراءات المسجلة بالعيادة</p></div><button class="link-btn" data-view="visits">سجل الزيارات ←</button></div>${recent.length?recent.map(v=>visitRow(v)).join(""):`<div class="empty">لا توجد زيارات متاحة لهذه الوردية.</div>`}</section><section class="panel"><div class="panel-head"><div><h2>الإجراءات الأكثر طلباً</h2><p>ترتيب الإجراءات حسب عدد المرات</p></div><button class="link-btn" data-view="reports">التقارير الشاملة ←</button></div>${topProcedures().map((r,i)=>`<div class="patient-row"><div class="initial">${i+1}</div><div class="row-main"><strong>${esc(r.name)}</strong><span>${r.count} زيارة مسجلة</span></div><div class="row-meta">${displayCost(r.total)}</div></div>`).join("")||`<div class="empty">ستظهر الإجراءات هنا بعد تسجيل الزيارات.</div>`}</section></div></section>`
+      return`<section class="view"><div class="heading"><div><p class="eyebrow">لوحة إدارة عيادة الأسنان</p><h1>أهلاً بك، إدارة العيادة</h1><p class="sub">متابعة شاملة للأداء المالي، حركة المرضى، والمخزون بكفاءة عالية.</p></div><div class="button-row"><button class="secondary" data-view="reports">التقرير الشامل والأداء</button><button class="primary" data-view="new-visit">＋ تسجيل زيارة</button></div></div><div class="hero"><div class="hero-inner"><p class="eyebrow">بحث سريع</p><h2>ابحث في سجلات العيادة، المرضى، أو المواعيد</h2><p>ادخل اسم المريض، الجوال، أو رقم الملف للوصول السريع للسجل الطبي والزيارات.</p><div class="search"><span>⌕</span><input id="dashSearch" placeholder="اكتب اسم المريض، رقم الملف، أو الهاتف..." autocomplete="off"></div><div id="dashSearchResults"></div></div></div><div class="stats">${card("إجمالي المرضى",patients.length,"السجلات المحفوظة","♙")}${card("الزيارات المسجلة",activeVisits.length,"إجمالي الحالات المتاحة","◷")}${card("إجمالي الديون المعلقة",displayCost(totalDue),"مستحقات عند المرضى","💸")}${card("تنبيهات المخزون",inventory.filter(i=>i.qty<=i.minQty).length,"مواد أوشكت على النفاد","📦")}</div><div class="two-col"><section class="panel"><div class="panel-head"><div><h2>أحدث الزيارات والأبحاث</h2><p>آخر الإجراءات المسجلة بالعيادة</p></div><button class="link-btn" data-view="visits">سجل الزيارات ←</button></div>${recent.length?recent.map(v=>visitRow(v)).join(""):`<div class="empty">لا توجد زيارات متاحة لهذه الوردية.</div>`}</section><section class="panel"><div class="panel-head"><div><h2>الإجراءات الأكثر طلباً</h2><p>ترتيب الإجراءات حسب عدد المرات</p></div><button class="link-btn" data-view="reports">التقارير الشاملة ←</button></div>${topProcedures().map((r,i)=>`<div class="patient-row"><div class="initial">${i+1}</div><div class="row-main"><strong>${esc(r.name)}</strong><span>${r.count} زيارة مسجلة</span></div><div class="row-meta">${displayCost(r.total)}</div></div>`).join("")||`<div class="empty">ستظهر الإجراءات هنا بعد تسجيل الزيارات.</div>`}</section></div></section>`
     }
 
-    function appointmentsPage(){
+        function appointmentsPage(){
       const activeVisits = getVisibleVisits();
       return `<section class="view">
         <div class="heading">
@@ -814,7 +1055,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         </div>
         <div class="toolbar">
           <input id="apptSearch" placeholder="بحث باسم المريض، الطبيب، أو الشكوى...">
-          <span class="sub">${activeVisits.length} موعد ومتابعة مسجلة</span>
+          <input id="apptDate" type="date" title="تصفية حسب التاريخ">
+          <span class="sub" id="apptCountLabel">${activeVisits.length} موعد ومتابعة مسجلة</span>
         </div>
         <section class="panel" id="apptsTable">
           ${visitsTable(activeVisits)}
@@ -822,8 +1064,92 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       </section>`;
     }
 
+        
+    function renderExpensesTable(list){
+      if(!list.length) return `<div class="empty">لا توجد مصاريف مسجلة مطابقة.</div>`;
+      return `<div class="table-wrap">
+        <table>
+          <thead><tr><th>التاريخ</th><th>بند المصروف</th><th>النوع</th><th>التصنيف</th><th>المبلغ</th><th>ملاحظات</th><th>إجراءات</th></tr></thead>
+          <tbody>
+            ${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e => `
+              <tr>
+                <td>${date(e.date)}</td>
+                <td><strong>${esc(e.title)}</strong></td>
+                <td><span class="badge ${e.type==='ثابتة'?'blue':'gold'}">${esc(e.type)}</span></td>
+                <td>${esc(e.category)}</td>
+                <td><strong>${displayCost(e.amount)}</strong></td>
+                <td><small class="sub">${esc(e.notes||"-")}</small></td>
+                <td>
+                  <div class="button-row">
+                    <button class="secondary" data-action="edit-expense" data-id="${e.id}">تعديل</button>
+                    <button class="danger" data-action="delete-expense" data-id="${e.id}">حذف</button>
+                  </div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
+    function renderInventoryTable(list){
+      if(!list.length) return `<div class="empty">لا توجد مواد مطابقة في المخزون.</div>`;
+      return `<div class="table-wrap">
+        <table>
+          <thead><tr><th>اسم المادة / الصنف</th><th>الكمية المتوفرة</th><th>حد الأمان</th><th>الوحدة</th><th>تاريخ الصلاحية</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+          <tbody>
+            ${list.map(i => {
+              const isLow = Number(i.qty) <= Number(i.minQty);
+              return `<tr>
+                <td><strong>${esc(i.name)}</strong></td>
+                <td><strong>${esc(i.qty)}</strong></td>
+                <td>${esc(i.minQty)}</td>
+                <td>${esc(i.unit)}</td>
+                <td>${date(i.expireDate)}</td>
+                <td><span class="badge ${isLow?'red':'green'}">${isLow?'منخفض جداً':'متوفر'}</span></td>
+                <td><div class="button-row"><button class="secondary" data-action="update-inv-qty" data-id="${i.id}">تحديث الكمية</button><button class="danger" data-action="delete-inv" data-id="${i.id}">حذف</button></div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
+    function renderLabsTable(list){
+      if(!list.length) return `<div class="empty">لا توجد طلبات معمل مطابقة.</div>`;
+      return `<div class="table-wrap">
+        <table>
+          <thead><tr><th>تاريخ الطلب</th><th>اسم المعمل</th><th>اسم المريض</th><th>رقم السن</th><th>نوع العمل / التركيبة</th><th>التكلفة</th><th>الحالة</th><th>تقييم الجودة</th><th>إجراءات</th></tr></thead>
+          <tbody>
+            ${list.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(l => `
+              <tr>
+                <td>${date(l.date)}</td>
+                <td><strong>${esc(l.labName)}</strong></td>
+                <td>${esc(l.patientName)}</td>
+                <td>${esc(l.toothNumber)}</td>
+                <td><span class="badge blue">${esc(l.workType)}</span></td>
+                <td><strong>${displayCost(l.cost)}</strong></td>
+                <td><span class="badge ${l.status==='تم الاستلام'?'green':(l.status==='ملغى'?'red':'gold')}">${esc(l.status)}</span></td>
+                <td>${esc(l.rating)}</td>
+                <td>
+                  <div class="button-row">
+                    <button class="secondary" data-action="edit-lab" data-id="${l.id}">تعديل</button>
+                    <button class="danger" data-action="delete-lab" data-id="${l.id}">حذف</button>
+                  </div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
     function expensesPage(){
       const totalExp = expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+      const fixedExp = expenses.filter(e=>e.type==='ثابتة').reduce((s,e)=>s+Number(e.amount||0),0);
+      const varExp = expenses.filter(e=>e.type==='متغيرة').reduce((s,e)=>s+Number(e.amount||0),0);
+      const mktExp = expenses.filter(e=>e.category==='تسويق وإعلانات').reduce((s,e)=>s+Number(e.amount||0),0);
+
       return `<section class="view">
         <div class="heading">
           <div><p class="eyebrow">الشؤون المالية</p><h1>سجل المصاريف والمشتريات</h1><p class="sub">تتبع التكاليف الثابتة، المتغيرة، ومشتريات المواد الطبية مع إمكانية تعديل التواريخ.</p></div>
@@ -831,69 +1157,53 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         </div>
         <div class="report-cards">
           ${card("إجمالي المصاريف", displayCost(totalExp), "كافة التكاليف المسجلة", "💸")}
-          ${card("المصاريف الثابتة", displayCost(expenses.filter(e=>e.type==='ثابتة').reduce((s,e)=>s+Number(e.amount||0),0)), "إيجار، رواتب، فواتير", "🏢")}
-          ${card("المصاريف المتغيرة", displayCost(expenses.filter(e=>e.type==='متغيرة').reduce((s,e)=>s+Number(e.amount||0),0)), "مواد طبية، صيانة، إعلانات", "🧪")}
-          ${card("مصاريف التسويق", displayCost(expenses.filter(e=>e.category==='تسويق وإعلانات').reduce((s,e)=>s+Number(e.amount||0),0)), "الحملات الإعلانية", "📣")}
+          ${card("المصاريف الثابتة", displayCost(fixedExp), "إيجار، رواتب، فواتير", "🏢")}
+          ${card("المصاريف المتغيرة", displayCost(varExp), "مواد طبية، صيانة، إعلانات", "🧪")}
+          ${card("مصاريف التسويق", displayCost(mktExp), "الحملات الإعلانية", "📣")}
         </div>
-        <section class="panel">
-          <div class="panel-head"><div><h2>قائمة المصاريف المسجلة</h2><p>كل المبالغ المصروفة بالعيادة</p></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>التاريخ</th><th>بند المصروف</th><th>النوع</th><th>التصنيف</th><th>المبلغ</th><th>ملاحظات</th><th>إجراءات</th></tr></thead>
-              <tbody>
-                ${expenses.length ? expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e => `
-                  <tr>
-                    <td>${date(e.date)}</td>
-                    <td><strong>${esc(e.title)}</strong></td>
-                    <td><span class="badge ${e.type==='ثابتة'?'blue':'gold'}">${esc(e.type)}</span></td>
-                    <td>${esc(e.category)}</td>
-                    <td><strong>${displayCost(e.amount)}</strong></td>
-                    <td><small class="sub">${esc(e.notes)}</small></td>
-                    <td>
-                       <div class="button-row">
-                         <button class="secondary" data-action="edit-expense" data-id="${e.id}">تعديل</button>
-                         <button class="danger" data-action="delete-expense" data-id="${e.id}">حذف</button>
-                       </div>
-                    </td>
-                  </tr>
-                `).join('') : '<tr><td colspan="7" class="empty">لا توجد مصاريف مسجلة حتى الآن.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+        <div class="toolbar">
+          <input id="expenseSearch" placeholder="بحث في بند المصروف أو الملاحظات...">
+          <select id="expenseTypeFilter">
+            <option value="">جميع الأنواع</option>
+            <option value="ثابتة">مصاريف ثابتة</option>
+            <option value="متغيرة">مصاريف متغيرة</option>
+          </select>
+          <span class="sub" id="expenseCountLabel">${expenses.length} بند مسجل</span>
+        </div>
+        <section class="panel" id="expensesTableContainer">
+          ${renderExpensesTable(expenses)}
         </section>
       </section>`;
     }
 
-    function inventoryPage(){
+        function inventoryPage(){
+      const lowCount = inventory.filter(i => Number(i.qty) <= Number(i.minQty)).length;
       return `<section class="view">
-        <div class="heading"><div><p class="eyebrow">إدارة المستلزمات</p><h1>المخزون المواد الطبية</h1><p class="sub">متابعة الكميات، حد الأمان، وتواريخ الصلاحية لمنع الهدر.</p></div>
-        <button class="primary" id="addInvBtn">＋ إضافة صنف للمخزون</button></div>
-        <section class="panel">
-          <div class="panel-head"><div><h2>جدول المواد والمستلزمات الطبية</h2><p>الكميات المتوفرة والتنبيهات</p></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>اسم المادة / الصنف</th><th>الكمية المتوفرة</th><th>حد الأمان</th><th>الوحدة</th><th>تاريخ الصلاحية</th><th>الحالة</th><th>إجراءات</th></tr></thead>
-              <tbody>
-                ${inventory.length ? inventory.map(i => {
-                  const isLow = Number(i.qty) <= Number(i.minQty);
-                  return `<tr>
-                    <td><strong>${esc(i.name)}</strong></td>
-                    <td><strong>${esc(i.qty)}</strong></td>
-                    <td>${esc(i.minQty)}</td>
-                    <td>${esc(i.unit)}</td>
-                    <td>${date(i.expireDate)}</td>
-                    <td><span class="badge ${isLow?'red':'green'}">${isLow?'منخفض جداً':'متوفر'}</span></td>
-                    <td><div class="button-row"><button class="secondary" data-action="update-inv-qty" data-id="${i.id}">تحديث الكمية</button><button class="danger" data-action="delete-inv" data-id="${i.id}">حذف</button></div></td>
-                  </tr>`;
-                }).join('') : '<tr><td colspan="7" class="empty">لا توجد مواد مسجلة بالمخزون.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+        <div class="heading">
+          <div><p class="eyebrow">إدارة المستلزمات</p><h1>المخزون والمواد الطبية</h1><p class="sub">متابعة الكميات، حد الأمان، وتواريخ الصلاحية لمنع الهدر وضمان استمرارية العمل.</p></div>
+          <button class="primary" id="addInvBtn">＋ إضافة صنف للمخزون</button>
+        </div>
+        <div class="report-cards">
+          ${card("إجمالي الأصناف", inventory.length, "المواد المسجلة بالمخزن", "📦")}
+          ${card("أصناف منخفضة", lowCount, "أقل من حد الأمان", "⚠️")}
+          ${card("أصناف متوفرة", inventory.length - lowCount, "كميات كافية", "✅")}
+        </div>
+        <div class="toolbar">
+          <input id="invSearch" placeholder="بحث باسم المادة أو الوحدة...">
+          <select id="invStatusFilter">
+            <option value="">جميع الحالات</option>
+            <option value="low">منخفض جداً (تحت حد الأمان)</option>
+            <option value="ok">متوفر بكمية كافية</option>
+          </select>
+          <span class="sub" id="invCountLabel">${inventory.length} صنف بالمخزون</span>
+        </div>
+        <section class="panel" id="invTableContainer">
+          ${renderInventoryTable(inventory)}
         </section>
       </section>`;
     }
 
-    function labsPage(){
+        function labsPage(){
       const totalLabCost = labs.reduce((s,l)=>s+Number(l.cost||0),0);
       return `<section class="view">
         <div class="heading"><div><p class="eyebrow">المعامل الخارجية</p><h1>سجل معامل الأسنان</h1><p class="sub">متابعة تركيبات وحالات التركيبات والتقويم الخارجية وتعديل تواريخها.</p></div>
@@ -901,36 +1211,22 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         <div class="report-cards">
           ${card("إجمالي الطلبات", labs.length, "حالات أرسلت للمعمل", "🦷")}
           ${card("إجمالي تكلفة المعامل", displayCost(totalLabCost), "مستحقات المعامل", "💸")}
-          ${card("قيد الإنجاز", labs.filter(l=>l.status==='قيد التصنيع').length, "حالات في المعمل", "⏳")}
+          ${card("قيد الإنجاز", labs.filter(l=>l.status==='قيد التصنيع'||l.status==='تم الإرسال').length, "حالات في المعمل", "⏳")}
           ${card("تم استلامها", labs.filter(l=>l.status==='تم الاستلام').length, "جاهزة للتركيب", "✅")}
         </div>
-        <section class="panel">
-          <div class="panel-head"><div><h2>قائمة الحالات المرسلة للمعامل</h2><p>تفاصيل الحالات والجودة والتكلفة</p></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>تاريخ الطلب</th><th>اسم المعمل</th><th>اسم المريض</th><th>رقم السن</th><th>نوع العمل / التركيبة</th><th>التكلفة</th><th>الحالة</th><th>تقييم الجودة</th><th>إجراءات</th></tr></thead>
-              <tbody>
-                ${labs.length ? labs.sort((a,b)=>b.date.localeCompare(a.date)).map(l => `
-                  <tr>
-                    <td>${date(l.date)}</td>
-                    <td><strong>${esc(l.labName)}</strong></td>
-                    <td>${esc(l.patientName)}</td>
-                    <td><span class="badge gold">${esc(l.toothNumber||"غير محدد")}</span></td>
-                    <td><span class="badge blue">${esc(l.workType)}</span></td>
-                    <td><strong>${displayCost(l.cost)}</strong></td>
-                    <td><span class="badge ${l.status==='تم الاستلام'?'green':'gold'}">${esc(l.status)}</span></td>
-                    <td>${esc(l.rating||"ممتاز")}</td>
-                    <td>
-                      <div class="button-row">
-                        <button class="secondary" data-action="edit-lab" data-id="${l.id}">تعديل</button>
-                        <button class="danger" data-action="delete-lab" data-id="${l.id}">حذف</button>
-                      </div>
-                    </td>
-                  </tr>
-                `).join('') : '<tr><td colspan="9" class="empty">لا توجد طلبات معمل مسجلة.</td></tr>'}
-              </tbody>
-            </table>
-          </div>
+        <div class="toolbar">
+          <input id="labSearch" placeholder="بحث باسم المريض أو المعمل أو نوع العمل...">
+          <select id="labStatusFilter">
+            <option value="">جميع الحالات</option>
+            <option value="قيد التصنيع">قيد التصنيع</option>
+            <option value="تم الإرسال">تم الإرسال</option>
+            <option value="تم الاستلام">تم الاستلام</option>
+            <option value="ملغى">ملغى</option>
+          </select>
+          <span class="sub" id="labCountLabel">${labs.length} طلب مسجل</span>
+        </div>
+        <section class="panel" id="labsTableContainer">
+          ${renderLabsTable(labs)}
         </section>
       </section>`;
     }
@@ -1693,12 +1989,14 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       </section>`;
     }
 
-    function patientDetail(p){
+        function patientDetail(p){
+      if(!p) return `<section class="view"><div class="heading"><div><h1>ملف المريض</h1><p class="sub">لم يتم العثور على الملف المطلوب.</p></div><button class="secondary" data-view="patients">← رجوع لدليل المرضى</button></div><div class="panel empty">لم يتم العثور على سجل المريض أو تم حذفه.</div></section>`;
       const pv = getPatientVisits(p.id);
       return `<section class="view">
         <div class="heading">
           <div><p class="eyebrow">تفاصيل الملف الطبي</p><h1>${esc(p.fullName)} (#${esc(p.file)})</h1><p class="sub">تاريخ التسجيل: ${date(p.created)}</p></div>
           <div class="button-row">
+            <button class="secondary" data-view="patients">← رجوع لدليل المرضى</button>
             <button class="secondary" data-action="edit-patient" data-id="${p.id}">تعديل الملف</button>
             <button class="primary" data-action="new-visit-for" data-id="${p.id}">＋ تسجيل زيارة</button>
           </div>
@@ -1710,11 +2008,14 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
           </div>
           <div class="detail-grid">
             <div class="detail-item"><label>العمر</label><strong>${value(p.age)} سنة</strong></div>
-            <div class="detail-item"><label>الجنس</label><strong>${value(p.gender)}</strong></div>
-            <div class="detail-item"><label>الحالة الاجتماعية</label><strong>${value(p.marital)}</strong></div>
+            <div class="detail-item"><label>الجنس</label><strong>${Array.isArray(p.gender)?p.gender.join('، '):value(p.gender)}</strong></div>
+            <div class="detail-item"><label>الحالة الاجتماعية</label><strong>${Array.isArray(p.marital)?p.marital.join('، '):value(p.marital)}</strong></div>
             <div class="detail-item"><label>الأمراض المزمنة</label><strong>${Array.isArray(p.conditions)?p.conditions.join('، '):value(p.conditions)}</strong></div>
-            <div class="detail-item"><label>الأدية</label><strong>${value(p.medications)}</strong></div>
+            <div class="detail-item"><label>الأدوية المستخدمة</label><strong>${value(p.medications)}</strong></div>
             <div class="detail-item"><label>الحساسية</label><strong>${Array.isArray(p.allergies)?p.allergies.join('، '):value(p.allergies)}</strong></div>
+            <div class="detail-item"><label>العادات وصحة الفم</label><strong>${Array.isArray(p.habits)?p.habits.join('، '):value(p.habits)}</strong></div>
+            <div class="detail-item"><label>مصدر المعرفة</label><strong>${Array.isArray(p.referral)?p.referral.join('، '):value(p.referral)}</strong></div>
+            <div class="detail-item"><label>الخدمة المفضلة</label><strong>${Array.isArray(p.service)?p.service.join('، '):value(p.service)}</strong></div>
           </div>
           <div class="detail-block">
             <h3>الزيارات والمتابعة الطبيّة (${pv.length})</h3>
@@ -1870,7 +2171,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
           data.id = String(Date.now());
           data.created = today;
           patients.push(data);
-          message("تم إضاف المريض بنجاح.");
+          message("تم إضافة المريض بنجاح.");
         }
         save();
         view = "patients";
@@ -1894,7 +2195,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         data.items = items;
         data.cost = Number(data.cost||0);
         data.paid = Number(data.paid||0);
-        data.due = Number(data.due||0);
+        data.due = Math.max(0, data.cost - data.paid);
 
         if(isEmployeeRole()){
           data.shift = currentRole === "morning" ? "صباح" : "مساء";
@@ -1969,11 +2270,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       });
 
       document.getElementById("dashSearch")?.addEventListener("input", e=>{
-        const q = e.target.value.trim().toLowerCase();
-        if(!q) return;
-        const pMatch = patients.filter(p=>p.fullName.toLowerCase().includes(q) || p.file.includes(q) || p.phone.includes(q));
-        const t = document.getElementById("table");
-        if(t && pMatch.length) t.innerHTML = patientTable(pMatch);
+        renderDashSearchResults(e.target.value);
       });
 
       document.getElementById("patientSearch")?.addEventListener("input", e=>{
@@ -1986,7 +2283,57 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       document.getElementById("visitSearch")?.addEventListener("input", filterVisitsUI);
       document.getElementById("visitDate")?.addEventListener("change", filterVisitsUI);
 
-      function filterVisitsUI(){
+      
+    function filterApptsUI(){
+      const q = document.getElementById("apptSearch")?.value.trim().toLowerCase()||"";
+      const d = document.getElementById("apptDate")?.value||"";
+      let active = getVisibleVisits();
+      if(q) active = active.filter(v=>(v.patientName||"").toLowerCase().includes(q) || (v.mainComplaint||"").toLowerCase().includes(q) || (v.doctor||"").toLowerCase().includes(q) || (v.chair||"").toLowerCase().includes(q));
+      if(d) active = active.filter(v=>v.date===d);
+      const vt = document.getElementById("apptsTable");
+      if(vt) vt.innerHTML = visitsTable(active);
+      const lbl = document.getElementById("apptCountLabel");
+      if(lbl) lbl.textContent = active.length + " موعد ومتابعة مسجلة";
+    }
+
+    function filterExpensesUI(){
+      const q = document.getElementById("expenseSearch")?.value.trim().toLowerCase()||"";
+      const type = document.getElementById("expenseTypeFilter")?.value||"";
+      let list = expenses;
+      if(q) list = list.filter(e => (e.title||"").toLowerCase().includes(q) || (e.notes||"").toLowerCase().includes(q) || (e.category||"").toLowerCase().includes(q));
+      if(type) list = list.filter(e => e.type === type);
+      const cont = document.getElementById("expensesTableContainer");
+      if(cont) cont.innerHTML = renderExpensesTable(list);
+      const lbl = document.getElementById("expenseCountLabel");
+      if(lbl) lbl.textContent = list.length + " بند مسجل";
+    }
+
+    function filterInventoryUI(){
+      const q = document.getElementById("invSearch")?.value.trim().toLowerCase()||"";
+      const status = document.getElementById("invStatusFilter")?.value||"";
+      let list = inventory;
+      if(q) list = list.filter(i => (i.name||"").toLowerCase().includes(q) || (i.unit||"").toLowerCase().includes(q));
+      if(status==="low") list = list.filter(i => Number(i.qty) <= Number(i.minQty));
+      else if(status==="ok") list = list.filter(i => Number(i.qty) > Number(i.minQty));
+      const cont = document.getElementById("invTableContainer");
+      if(cont) cont.innerHTML = renderInventoryTable(list);
+      const lbl = document.getElementById("invCountLabel");
+      if(lbl) lbl.textContent = list.length + " صنف بالمخزون";
+    }
+
+    function filterLabsUI(){
+      const q = document.getElementById("labSearch")?.value.trim().toLowerCase()||"";
+      const st = document.getElementById("labStatusFilter")?.value||"";
+      let list = labs;
+      if(q) list = list.filter(l => (l.patientName||"").toLowerCase().includes(q) || (l.labName||"").toLowerCase().includes(q) || (l.workType||"").toLowerCase().includes(q));
+      if(st) list = list.filter(l => l.status === st);
+      const cont = document.getElementById("labsTableContainer");
+      if(cont) cont.innerHTML = renderLabsTable(list);
+      const lbl = document.getElementById("labCountLabel");
+      if(lbl) lbl.textContent = list.length + " طلب مسجل";
+    }
+
+    function filterVisitsUI(){
         const q = document.getElementById("visitSearch")?.value.trim().toLowerCase()||"";
         const d = document.getElementById("visitDate")?.value||"";
         let active = getVisibleVisits();
@@ -2089,7 +2436,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         const act = actionBtn.dataset.action;
         const id = actionBtn.dataset.id;
 
-        if(act==="open-patient"){
+        
+        if(act==="notifications"){
+          openNotificationModal();
+        } else if(act==="open-patient"){
           selectedPatientId = id;
           view = "patient-detail";
           render();
@@ -2205,53 +2555,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
         } else if(act==="print"){
           window.print();
         } else if(act==="backup"){
-          try {
-            if(typeof XLSX === 'undefined' || !XLSX.utils){
-              message("خطأ: مكتبة Excel غير محملة أو تالفة.");
-              return;
-            }
-            const wb = XLSX.utils.book_new();
-            const addSheet = (name, data) => {
-              if(data && data.length){
-                const rows = data.map(r => {
-                  const out = {};
-                  for(const [k, v] of Object.entries(r)){
-                    if(v !== null && typeof v === 'object') out[k] = JSON.stringify(v);
-                    else out[k] = v;
-                  }
-                  return out;
-                });
-                const ws = XLSX.utils.json_to_sheet(rows);
-                XLSX.utils.book_append_sheet(wb, ws, name);
-              } else {
-                // ورقة فارغة لضمان عدم فشل التصدير إذا كانت البيانات فارغة
-                const ws = XLSX.utils.json_to_sheet([{ملاحظة:"لا توجد بيانات مسجلة في هذا الجدول"}]);
-                XLSX.utils.book_append_sheet(wb, ws, name);
-              }
-            };
-            addSheet('patients', patients);
-            addSheet('visits', visits);
-            addSheet('procedures', procedures);
-            addSheet('customLists', customLists);
-            addSheet('expenses', expenses);
-            addSheet('inventory', inventory);
-            addSheet('labs', labs);
-            addSheet('monthlyReports', monthlyReports);
-            
-            const wbout = XLSX.write(wb, {bookType:'xlsx', type:'array'});
-            const blob = new Blob([wbout], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-            const filename = `oras-backup-${today}.xlsx`;
-
-            const saved = await saveBlob(blob, filename);
-            if(saved){
-              message("تم استخراج النسخة الاحتياطية بنجاح.");
-            } else {
-              message("تعذر حفظ ملف النسخة الاحتياطية تلقائياً. جرّب استعادة النسخة من قائمة الاستعادة.");
-            }
-          } catch(err) {
-            console.error(err);
-            message("فشل تصدير النسخة الاحتياطية: " + err.message);
-          }
+          await backupToJSON();
         } else if(act==="restore"){
           // Try File System Access API first, then fallback to hidden input
           if(window.showOpenFilePicker){
@@ -2259,7 +2563,8 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
               try {
                 const [handle] = await window.showOpenFilePicker({
                   types: [
-                    {description: 'Excel files', accept: {'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']}},
+                    {description: 'ملفات النسخ الاحتياطي (JSON)', accept: {'application/json': ['.json']}},
+                    {description: 'ملفات Excel القديمة (XLSX)', accept: {'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']}},
                     {description: 'All files', accept: {'*/*': []}}
                   ]
                 });
@@ -2296,10 +2601,12 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
           const iid = actionBtn.dataset.itemId;
           const list = customLists.find(l=>l.id===lid);
           if(list){
-            list.items = list.items.filter(it=>it.id!==iid);
-            save();
-            render();
-            message("تم حذف العنصر من القائمة.");
+            if(confirm("هل أنت متأكد من إزالة هذا المريض من القائمة؟")){
+              list.items = list.items.filter(it=>it.id!==iid);
+              save();
+              render();
+              message("تمت إزالة المريض من القائمة.");
+            }
           }
         } else if(act==="generate-monthly"){
           const year = Number(document.getElementById("genYear")?.value || new Date().getFullYear());
@@ -2402,58 +2709,116 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
 
     async function processRestoreFile(file){
       if(!file) return;
-      if(typeof XLSX === 'undefined' || !XLSX.utils){
-        message("خطأ: مكتبة Excel غير محملة أو تالفة.");
-        return;
+      const fileName = (file.name || "").toLowerCase();
+
+      // إذا كان ملف إكسل قديم
+      if(fileName.endsWith(".xlsx") || file.type.includes("spreadsheet") || file.type.includes("excel")){
+        if(typeof XLSX === 'undefined' || !XLSX.utils){
+          message("خطأ: مكتبة Excel غير متوفرة لمعالجة هذا الملف القديم.");
+          return;
+        }
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = ev => {
+            try{
+              const data = new Uint8Array(ev.target.result);
+              const workbook = XLSX.read(data, {type: 'array'});
+              const sheetToJSON = (name) => {
+                const ws = workbook.Sheets[name];
+                if(!ws) return [];
+                const rows = XLSX.utils.sheet_to_json(ws);
+                return rows.map(r => {
+                  const out = {};
+                  for(const [k, v] of Object.entries(r)){
+                    if(typeof v === 'string' && (v.startsWith('[') || v.startsWith('{'))){
+                      try{ out[k] = JSON.parse(v); } catch(e){ out[k] = v; }
+                    } else {
+                      out[k] = v;
+                    }
+                  }
+                  return out;
+                });
+              };
+
+              if(!confirm("هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم تحديث البيانات الحالية بالبيانات المستوردة.")) {
+                resolve();
+                return;
+              }
+
+              patients = sheetToJSON('patients');
+              visits = sheetToJSON('visits');
+              procedures = sheetToJSON('procedures');
+              customLists = sheetToJSON('customLists');
+              expenses = sheetToJSON('expenses');
+              inventory = sheetToJSON('inventory');
+              labs = sheetToJSON('labs');
+              monthlyReports = sheetToJSON('monthlyReports');
+
+              save();
+              render();
+              message("تمت استعادة البيانات بنجاح من ملف Excel.");
+              resolve();
+            } catch(err){
+              console.error(err);
+              message("ملف النسخة الاحتياطية غير صالح.");
+              reject(err);
+            }
+          };
+          reader.onerror = () => {
+            message("خطأ في قراءة الملف.");
+            reject(new Error('FileReader error'));
+          };
+          reader.readAsArrayBuffer(file);
+        });
       }
+
+      // الأساسي: استيراد ملف JSON
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = ev => {
-          try{
-            const data = new Uint8Array(ev.target.result);
-            const workbook = XLSX.read(data, {type: 'array'});
-            
-            const sheetToJSON = (name) => {
-              const ws = workbook.Sheets[name];
-              if(!ws) return [];
-              const rows = XLSX.utils.sheet_to_json(ws);
-              return rows.map(r => {
-                const out = {};
-                for(const [k, v] of Object.entries(r)){
-                  if(typeof v === 'string' && (v.startsWith('[') || v.startsWith('{'))){
-                    try{ out[k] = JSON.parse(v); } catch(e){ out[k] = v; }
-                  } else {
-                    out[k] = v;
-                  }
-                }
-                return out;
-              });
-            };
-            
-            patients = sheetToJSON('patients');
-            visits = sheetToJSON('visits');
-            procedures = sheetToJSON('procedures');
-            customLists = sheetToJSON('customLists');
-            expenses = sheetToJSON('expenses');
-            inventory = sheetToJSON('inventory');
-            labs = sheetToJSON('labs');
-            monthlyReports = sheetToJSON('monthlyReports');
-            
+          try {
+            const text = ev.target.result;
+            const parsed = JSON.parse(text);
+
+            if(!parsed || typeof parsed !== 'object'){
+              throw new Error("تنسيق JSON غير صالح");
+            }
+
+            if(!confirm("هل أنت متأكد من استعادة النسخة الاحتياطية؟ سيتم تحديث البيانات الحالية بالبيانات الموجودة في ملف JSON.")) {
+              resolve();
+              return;
+            }
+
+            const source = parsed.data || parsed;
+
+            if(Array.isArray(source.patients)) patients = source.patients;
+            if(Array.isArray(source.visits)) visits = source.visits;
+            if(Array.isArray(source.procedures)) procedures = source.procedures;
+            if(Array.isArray(source.customLists)) customLists = source.customLists;
+            if(Array.isArray(source.expenses)) expenses = source.expenses;
+            if(Array.isArray(source.inventory)) inventory = source.inventory;
+            if(Array.isArray(source.labs)) labs = source.labs;
+            if(Array.isArray(source.monthlyReports)) monthlyReports = source.monthlyReports;
+
+            if(parsed.settings && parsed.settings.theme){
+              setTheme(parsed.settings.theme);
+            }
+
             save();
             render();
-            message("تمت استعادة البيانات بنجاح.");
+            message("تمت استعادة البيانات بنجاح من ملف JSON.");
             resolve();
-          } catch(err){
-            console.error(err);
-            message("ملف النسخة الاحتياطية غير صالح.");
+          } catch(err) {
+            console.error("JSON restore error:", err);
+            message("خطأ: ملف النسخة الاحتياطية غير صالح أو تالف.");
             reject(err);
           }
         };
         reader.onerror = () => {
-          message("خطأ في قراءة الملف.");
-          reject(new Error('FileReader error'));
+          message("خطأ أثناء قراءة ملف JSON.");
+          reject(new Error("FileReader error"));
         };
-        reader.readAsArrayBuffer(file);
+        reader.readAsText(file, "utf-8");
       });
     }
 
@@ -2475,6 +2840,10 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
     });
 
     document.getElementById("roleLogoutBtn")?.addEventListener("click", roleLogout);
+    
+    document.getElementById("closeNotificationBtn")?.addEventListener("click", closeNotificationModal);
+    document.getElementById("dismissNotificationBtn")?.addEventListener("click", closeNotificationModal);
+
 
     window.addEventListener("DOMContentLoaded", ()=>{
       initializeRoleGate();
@@ -2482,6 +2851,7 @@ break;case"<bookViews":;case"<bookViews>":;case"</bookViews>":break;case"<workbo
       checkAndAutoGenerateMonthlyReport();
       render();
     });
+  
   </script>
 </body>
 </html>
