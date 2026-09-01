@@ -507,11 +507,11 @@ tbody tr:hover{background:#f8fafc}
 
   /* ---------- Roles & Permissions ---------- */
   const ROLES = {
-    admin:      { label:"مدير النظام", color:"text-danger",    perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:1, expenses:1, expenses_view:1, expenses_delete:1, reports:1, users:1, settings:1, backup:1 } },
-    manager:    { label:"مدير الصيدلية", color:"text-warn",   perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:1, expenses:1, expenses_view:1, expenses_delete:1, reports:1, users:0, settings:1, backup:1 } },
-    pharmacist: { label:"صيدلي", color:"text-success",        perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:0, stock_adjust:1, purchases:0, purchases_view:1, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, settings:0, backup:0 } },
-    cashier:    { label:"كاشير", color:"text-primary",        perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:0, inventory_edit:0, inventory_delete:0, stock_adjust:0, purchases:0, purchases_view:0, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, settings:0, backup:0 } },
-    inventory:  { label:"أمين المخزون", color:"text-primary", perms:{dashboard:0, sales:0, sales_view:0, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, settings:0, backup:0 } }
+    admin:      { label:"مدير النظام", color:"text-danger",    perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:1, expenses:1, expenses_view:1, expenses_delete:1, reports:1, users:1, manage_passwords:1, settings:1, backup:1 } },
+    manager:    { label:"مدير الصيدلية", color:"text-warn",   perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:1, expenses:1, expenses_view:1, expenses_delete:1, reports:1, users:0, manage_passwords:1, settings:1, backup:1 } },
+    pharmacist: { label:"صيدلي", color:"text-success",        perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:0, stock_adjust:1, purchases:0, purchases_view:1, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, manage_passwords:0, settings:0, backup:0 } },
+    cashier:    { label:"كاشير", color:"text-primary",        perms:{dashboard:1, sales:1, sales_view:1, inventory_view:1, inventory_add:0, inventory_edit:0, inventory_delete:0, stock_adjust:0, purchases:0, purchases_view:0, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, manage_passwords:0, settings:0, backup:0 } },
+    inventory:  { label:"أمين المخزون", color:"text-primary", perms:{dashboard:0, sales:0, sales_view:0, inventory_view:1, inventory_add:1, inventory_edit:1, inventory_delete:1, stock_adjust:1, purchases:1, purchases_view:1, purchases_delete:0, expenses:0, expenses_view:0, expenses_delete:0, reports:0, users:0, manage_passwords:0, settings:0, backup:0 } }
   };
 
   const PERM_LABELS = {
@@ -520,7 +520,7 @@ tbody tr:hover{background:#f8fafc}
     inventory_delete:"حذف منتج", stock_adjust:"تعديل الكمية", purchases:"إضافة مشتريات",
     purchases_view:"عرض المشتريات", purchases_delete:"حذف مشتريات", expenses:"إضافة مصروفات",
     expenses_view:"عرض المصروفات", expenses_delete:"حذف مصروفات", reports:"التقارير",
-    users:"إدارة المستخدمين", settings:"الإعدادات", backup:"النسخ الاحتياطي"
+    users:"إدارة المستخدمين", manage_passwords:"تغيير كلمات المرور", settings:"الإعدادات", backup:"النسخ الاحتياطي"
   };
 
   const isoLocal = (d) => {
@@ -733,10 +733,19 @@ tbody tr:hover{background:#f8fafc}
 
     const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach(el=>{
+      if(el.dataset.page === "users"){
+        el.style.display = (can("users") || can("manage_passwords")) ? "flex" : "none";
+        return;
+      }
       const perm = el.dataset.perm;
       if(perm && !can(perm)){ el.style.display="none"; }
       else { el.style.display="flex"; }
     });
+    document.getElementById("changePassBtn").style.display = canManagePasswords() ? "" : "none";
+  }
+
+  function canManagePasswords(){
+    return can("manage_passwords") || can("users");
   }
   function firstAllowedPage(){
     const order = [
@@ -744,7 +753,10 @@ tbody tr:hover{background:#f8fafc}
       ["purchases","purchases_view"],["expenses","expenses_view"],["reports","reports"],
       ["sales_history","sales_view"],["users","users"],["settings","settings"]
     ];
-    for(const [page, perm] of order){ if(can(perm)) return page; }
+    for(const [page, perm] of order){
+      if(page === "users"){ if(can("users") || can("manage_passwords")) return page; continue; }
+      if(can(perm)) return page;
+    }
     return null;
   }
   function renderApp(){
@@ -764,7 +776,8 @@ tbody tr:hover{background:#f8fafc}
       el.addEventListener("click", ()=>{
         const pid = el.dataset.page;
         const perm = el.dataset.perm;
-        if(perm && !can(perm)){ toast("ليس لديك صلاحية لهذه الصفحة","warn"); return; }
+        const allowed = pid === "users" ? (can("users") || can("manage_passwords")) : !perm || can(perm);
+        if(!allowed){ toast("ليس لديك صلاحية لهذه الصفحة","warn"); return; }
         showPage(pid);
         document.getElementById("sidebar").classList.remove("open");
         document.getElementById("overlay").classList.remove("show");
@@ -1446,25 +1459,31 @@ tbody tr:hover{background:#f8fafc}
   };
 
   /* ---------- Users ---------- */
+  function canUsersFull(){ return can("users"); }
   function renderUsers(){
-    if(!can("users")){ document.getElementById("page-users").innerHTML=`<div class="panel"><div class="empty"><div class="big">🔒</div>إدارة المستخدمين للمدير فقط</div></div>`; return; }
+    if(!can("users") && !can("manage_passwords")){ document.getElementById("page-users").innerHTML=`<div class="panel"><div class="empty"><div class="big">🔒</div>هذه الصفحة متاحة للمالك والمدير فقط</div></div>`; return; }
     const cur = data.users;
+    document.getElementById("addUserBtn").style.display = canUsersFull() ? "inline-flex" : "none";
     document.getElementById("userTable").innerHTML = cur.map(u=>{
       const isSelf = session && u.id===session.id;
       const custom = u.perms ? `<span class="badge badge-teal" title="صلاحيات مخصصة">مخصص</span>` : "";
       const roleLabel = esc((ROLES[u.role]||{}).label||u.role);
       const actions = [];
-      if(isSelf){
-        actions.push(`<span class="badge badge-blue">حسابك</span>`);
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="changePassword('${u.id}')">كلمة المرور</button>`);
-      } else {
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
-        actions.push(`<button class="btn btn-outline btn-sm" onclick="changePassword('${u.id}')">كلمة المرور</button>`);
-        actions.push(`<button class="btn ${u.active?'btn-warn':'btn-success'} btn-sm" onclick="toggleUser('${u.id}')">${u.active?"إيقاف":"تفعيل"}</button>`);
+      if(isSelf) actions.push(`<span class="badge badge-blue">حسابك</span>`);
+      if(can("users")){
+        if(!isSelf){
+          actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
+          actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
+          actions.push(`<button class="btn ${u.active?'btn-warn':'btn-success'} btn-sm" onclick="toggleUser('${u.id}')">${u.active?"إيقاف":"تفعيل"}</button>`);
+        } else {
+          actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
+          actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
+        }
       }
+      if(canManagePasswords()){
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="changePassword('${u.id}')">كلمة المرور</button>`);
+      }
+      if(!actions.length) actions.push(`<span class="text-muted" style="font-size:12px">—</span>`);
       return `<tr>
         <td><b>${esc(u.name)}</b> ${custom}</td><td>${esc(u.username)}</td>
         <td><span class="role-tag ${(ROLES[u.role]||{}).color}">${roleLabel}</span></td>
@@ -1583,10 +1602,9 @@ tbody tr:hover{background:#f8fafc}
     toast("تمت إعادة صلاحيات المستخدم لصلاحيات الدور","success");
   };
   window.changePassword = function(id){
+    if(!canManagePasswords()){ toast("تغيير كلمات المرور متاح للمالك والمدير فقط","warn"); return; }
     const isSelf = session && session.id===id;
-    if(isSelf) { openChangePasswordUI(id, true); return; }
-    if(!demand("users")) return;
-    openChangePasswordUI(id, false);
+    openChangePasswordUI(id, isSelf);
   };
   function openChangePasswordUI(id, isSelf){
     const u = data.users.find(x=>x.id===id); if(!u) return;
