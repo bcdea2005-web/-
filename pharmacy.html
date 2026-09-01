@@ -242,6 +242,7 @@ tbody tr:hover{background:#f8fafc}
     <div class="side-foot">
       <div class="user-name" id="sideUserName">—</div>
       <div class="user-role" id="sideUserRole">—</div>
+      <button class="logout-btn" id="changePassBtn" style="margin-bottom:8px">🔑 تغيير كلمة المرور</button>
       <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
     </div>
   </aside>
@@ -646,6 +647,14 @@ tbody tr:hover{background:#f8fafc}
     if(!session) return false;
     const u = data.users.find(x=>x.id===session.id);
     if(!u || !u.active) return false;
+    // If the user has custom permissions, use them first
+    if(u.perms && typeof u.perms[perm] === "boolean") return !!u.perms[perm];
+    const r = ROLES[u.role];
+    return !!(r && r.perms[perm]);
+  }
+  function userCan(u, perm){
+    if(!u) return false;
+    if(u.perms && typeof u.perms[perm] === "boolean") return !!u.perms[perm];
     const r = ROLES[u.role];
     return !!(r && r.perms[perm]);
   }
@@ -1443,15 +1452,25 @@ tbody tr:hover{background:#f8fafc}
     const cur = data.users;
     document.getElementById("userTable").innerHTML = cur.map(u=>{
       const isSelf = session && u.id===session.id;
+      const custom = u.perms ? `<span class="badge badge-teal" title="صلاحيات مخصصة">مخصص</span>` : "";
+      const roleLabel = esc((ROLES[u.role]||{}).label||u.role);
+      const actions = [];
+      if(isSelf){
+        actions.push(`<span class="badge badge-blue">حسابك</span>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="changePassword('${u.id}')">كلمة المرور</button>`);
+      } else {
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="openPermissionsUI('${u.id}')">الصلاحيات</button>`);
+        actions.push(`<button class="btn btn-outline btn-sm" onclick="changePassword('${u.id}')">كلمة المرور</button>`);
+        actions.push(`<button class="btn ${u.active?'btn-warn':'btn-success'} btn-sm" onclick="toggleUser('${u.id}')">${u.active?"إيقاف":"تفعيل"}</button>`);
+      }
       return `<tr>
-        <td><b>${esc(u.name)}</b></td><td>${esc(u.username)}</td>
-        <td><span class="role-tag ${(ROLES[u.role]||{}).color}">${esc((ROLES[u.role]||{}).label||u.role)}</span></td>
+        <td><b>${esc(u.name)}</b> ${custom}</td><td>${esc(u.username)}</td>
+        <td><span class="role-tag ${(ROLES[u.role]||{}).color}">${roleLabel}</span></td>
         <td>${u.active?`<span class="badge badge-green">نشط</span>`:`<span class="badge badge-gray">موقوف</span>`}</td>
-        <td>
-          ${isSelf?"<span class='text-muted' style='font-size:12px'>أنت</span>":`<button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">تعديل</button>
-          <button class="btn ${u.active?'btn-warn':'btn-success'} btn-sm" onclick="toggleUser('${u.id}')">${u.active?"إيقاف":"تفعيل"}</button>
-          `}
-        </td>
+        <td>${actions.join(" ")}</td>
       </tr>`;
     }).join("");
     // matrix
@@ -1515,6 +1534,83 @@ tbody tr:hover{background:#f8fafc}
       saveDB(); closeModal(); renderUsers(); toast("تم إضافة المستخدم","success");
     });
   };
+
+  /* ---------- Custom permissions & password ---------- */
+  function openPermissionsUI(id){
+    if(!demand("users")) return;
+    const u = data.users.find(x=>x.id===id); if(!u) return;
+    const roleDefaults = (ROLES[u.role]||{}).perms || {};
+    const effective = (perm) => (u.perms && typeof u.perms[perm]==="boolean") ? u.perms[perm] : !!roleDefaults[perm];
+    const groups = [
+      ["التداول اليومي", ["sales","sales_view"]],
+      ["المخزون", ["inventory_view","inventory_add","inventory_edit","inventory_delete","stock_adjust"]],
+      ["المشتريات", ["purchases","purchases_view","purchases_delete"]],
+      ["المصروفات", ["expenses","expenses_view","expenses_delete"]],
+      ["التقارير", ["reports","dashboard"]],
+      ["النظام", ["users","settings","backup"]]
+    ];
+    const checklist = groups.map(([title,keys])=>`
+      <div style="margin-bottom:16px">
+        <h4 style="font-size:14px;font-weight:800;color:var(--primary-dark);margin-bottom:8px">${title}</h4>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px">
+          ${keys.map(k=>`<label style="display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid var(--border);border-radius:9px;padding:8px 10px;cursor:pointer">
+            <input type="checkbox" data-perm="${k}" ${effective(k)?"checked":""}>
+            <span style="font-size:13px">${PERM_LABELS[k]||k}</span>
+          </label>`).join("")}
+        </div>
+      </div>`).join("");
+    openModal(`<div class="modal-head"><h3>صلاحيات: ${esc(u.name)}</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size:13px;margin-bottom:14px">المستخدم حاصله دور " ${(ROLES[u.role]||{}).label||u.role} ". صلاحياته أدناه مخصصة فوق صلاحيات الدور.</p>
+        ${checklist}
+      </div>
+      <div class="modal-foot"><button class="btn btn-outline" onclick="resetPerms('${u.id}')">↺ الرجوع لصلاحيات الدور</button><button class="btn btn-primary" id="savePermsBtn">💾 حفظ الصلاحيات</button></div>`);
+    document.getElementById("savePermsBtn").addEventListener("click", ()=>{
+      const perms = {};
+      document.querySelectorAll("[data-perm]").forEach(cb=>perms[cb.dataset.perm]=cb.checked);
+      u.perms = perms;
+      saveDB(); closeModal(); renderUsers();
+      if(session && session.id===id){ refreshShell(); }
+      toast("تم تحديث الصلاحيات بنجاح","success");
+    });
+  }
+  window.openPermissionsUI = openPermissionsUI;
+  window.resetPerms = function(id){
+    if(!demand("users")) return;
+    const u = data.users.find(x=>x.id===id); if(!u) return;
+    delete u.perms;
+    saveDB(); renderUsers();
+    if(session && session.id===id){ refreshShell(); }
+    toast("تمت إعادة صلاحيات المستخدم لصلاحيات الدور","success");
+  };
+  window.changePassword = function(id){
+    const isSelf = session && session.id===id;
+    if(isSelf) { openChangePasswordUI(id, true); return; }
+    if(!demand("users")) return;
+    openChangePasswordUI(id, false);
+  };
+  function openChangePasswordUI(id, isSelf){
+    const u = data.users.find(x=>x.id===id); if(!u) return;
+    openModal(`<div class="modal-head"><h3>تغيير كلمة المرور</h3><button class="close-x" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <p style="font-weight:700;margin-bottom:12px">المستخدم: ${esc(u.name)}</p>
+        ${isSelf?`<div class="field"><label>كلمة المرور الحالية</label><input id="oldPass" type="password" autocomplete="current-password"></div>`:""}
+        <div class="field"><label>كلمة المرور الجديدة</label><input id="newPass" type="password" autocomplete="new-password"></div>
+        <div class="field"><label>تأكيد كلمة المرور الجديدة</label><input id="newPass2" type="password" autocomplete="new-password"></div>
+        <p class="text-muted" style="font-size:12px">يفضل استخدام 6 أحرف على الأقل.</p>
+      </div>
+      <div class="modal-foot"><button class="btn btn-outline" onclick="closeModal()">إلغاء</button><button class="btn btn-primary" id="savePassBtn">💾 حفظ كلمة المرور</button></div>`);
+    document.getElementById("savePassBtn").addEventListener("click", ()=>{
+      if(isSelf && document.getElementById("oldPass").value !== u.password){ toast("كلمة المرور الحالية غير صحيحة","warn"); return; }
+      const p1 = document.getElementById("newPass").value;
+      const p2 = document.getElementById("newPass2").value;
+      if(p1.length < 6){ toast("كلمة المرور يجب أن تكون 6 أحرف على الأقل","warn"); return; }
+      if(p1 !== p2){ toast("كلمتا المرور غير متطابقتين","warn"); return; }
+      u.password = p1;
+      saveDB(); closeModal(); toast("تم تغيير كلمة المرور بنجاح","success");
+    });
+  }
+  window.openChangePasswordUI = openChangePasswordUI;
 
   /* ---------- Settings ---------- */
   function applyDemoVisibility(){
@@ -1592,6 +1688,9 @@ tbody tr:hover{background:#f8fafc}
   /* ---------- Wire up ---------- */
   function bindStaticEvents(){
     document.getElementById("logoutBtn").addEventListener("click", ()=>logout());
+    document.getElementById("changePassBtn").addEventListener("click", ()=>{
+      if(session) changePassword(session.id);
+    });
     document.getElementById("addProductBtn").addEventListener("click", ()=>addProduct());
     document.getElementById("exportProductsBtn").addEventListener("click", ()=>{ if(demand("inventory_view")) exportProducts(); });
     document.getElementById("addPurchaseBtn").addEventListener("click", openPurchaseForm);
