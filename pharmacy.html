@@ -208,7 +208,7 @@ tbody tr:hover{background:#f8fafc}
       <button class="btn btn-primary btn-block" type="submit">تسجيل الدخول</button>
     </form>
     <div class="demo-users">
-      <h4>حسابات تجريبية (اضغط للدخول مباشرة)</h4>
+      <h4>حسابات تجريبية (اضغط لاختيار اسم المستخدم وأدخل كلمة المرور يدوياً)</h4>
       <button type="button" class="demo-btn" data-u="admin" data-p="admin123"><b>مدير النظام</b> — admin / admin123</button>
       <button type="button" class="demo-btn" data-u="manager" data-p="manager123"><b>مدير الصيدلية</b> — manager / manager123</button>
       <button type="button" class="demo-btn" data-u="pharmacist" data-p="pharma123"><b>صيدلي</b> — pharmacist / pharma123</button>
@@ -696,12 +696,11 @@ tbody tr:hover{background:#f8fafc}
     });
     document.querySelectorAll(".demo-btn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
-        const u = btn.dataset.u, p = btn.dataset.p;
+        const u = btn.dataset.u;
         document.getElementById("loginUser").value = u;
-        document.getElementById("loginPass").value = p;
-        const user = data.users.find(x=>x.username===u);
-        if(user && user.active){ session={id:user.id,name:user.name,role:user.role}; saveSession(); loginSuccess(); }
-        else showLoginError("الحساب غير متاح");
+        document.getElementById("loginPass").value = "";
+        document.getElementById("loginError").classList.add("hidden");
+        document.getElementById("loginPass").focus();
       });
     });
   }
