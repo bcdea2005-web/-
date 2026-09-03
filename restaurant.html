@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>مطعم الأصالة | نكهة تجمعنا</title>
+  <meta name="description" content="مطعم الأصالة — أشهى المشاوي والأطباق الشعبية بأجواء عائلية دافئة. احجز طاولتك الآن.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <!-- الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       لوحة الألوان — الأحمر (يمكن تغيير الدرجة من هنا فقط)
+       ============================================================ */
+    :root{
+      --red-500:#e0162f;   /* الأحمر الأساسي */
+      --red-600:#c8102e;   /* أحمر أعمق للأزرار */
+      --red-700:#a30d25;   /* أحمر داكن */
+      --red-800:#7a0a1d;   /* أحمر غامق جداً */
+      --red-tint:#fdeef0;  /* خلفية حمراء فاتحة جداً */
+      --cream:#fdf9f4;     /* كريمي دافئ */
+      --paper:#ffffff;
+      --ink:#241418;       /* نص أساسي */
+      --muted:#8a6f74;     /* نص ثانوي */
+      --line:#f0dfe2;
+      --shadow:0 10px 30px rgba(163,13,37,.12);
+      --radius:18px;
+      --font-head:'Cairo',system-ui,sans-serif;
+      --font-body:'Tajawal','Cairo',system-ui,sans-serif;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);color:var(--ink);background:var(--cream);line-height:1.7;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    h1,h2,h3,h4{font-family:var(--font-head);line-height:1.35}
+
+    .container{width:min(1140px,92%);margin-inline:auto}
+    section{padding:90px 0}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--red-600);font-weight:700;font-size:14px;letter-spacing:.5px}
+    .eyebrow::before{content:"";width:34px;height:3px;border-radius:3px;background:var(--red-500)}
+    .sec-head{text-align:center;max-width:640px;margin:0 auto 55px}
+    .sec-head h2{font-size:clamp(26px,4vw,40px);font-weight:800;margin:10px 0 12px}
+    .sec-head p{color:var(--muted);font-size:17px}
+
+    /* ============================ الشريط العلوي ============================ */
+    .topbar{position:fixed;inset-inline:0;top:0;z-index:1000;transition:background .35s,box-shadow .35s,padding .35s;padding:18px 0}
+    .topbar .container{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;color:#fff;font-family:var(--font-head)}
+    .brand .mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--red-500),var(--red-700));display:grid;place-items:center;font-size:22px;box-shadow:0 6px 18px rgba(224,22,47,.45)}
+    .brand b{font-size:20px;font-weight:800;display:block;line-height:1.2}
+    .brand small{font-size:11px;letter-spacing:2px;opacity:.85}
+    .nav-links{display:flex;align-items:center;gap:28px}
+    .nav-links a{color:#fff;font-weight:500;font-size:15px;position:relative;padding:4px 0}
+    .nav-links a::after{content:"";position:absolute;bottom:0;inset-inline-start:0;width:0;height:2px;background:var(--red-500);transition:width .3s;border-radius:2px}
+    .nav-links a:hover::after{width:100%}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:15px;padding:13px 28px;border-radius:999px;transition:transform .25s,box-shadow .25s,background .25s,color .25s}
+    .btn-red{background:linear-gradient(135deg,var(--red-500),var(--red-700));color:#fff;box-shadow:0 8px 24px rgba(200,16,46,.4)}
+    .btn-red:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(200,16,46,.5)}
+    .btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+    .btn-ghost:hover{background:#fff;color:var(--red-700);border-color:#fff;transform:translateY(-3px)}
+    .topbar.scrolled{background:rgba(253,249,244,.97);box-shadow:0 6px 24px rgba(36,20,24,.1);padding:10px 0;backdrop-filter:blur(10px)}
+    .topbar.scrolled .brand,.topbar.scrolled .nav-links a{color:var(--ink)}
+    .topbar.scrolled .nav-links a:hover{color:var(--red-600)}
+    .burger{display:none;background:none;border:0;color:#fff;font-size:26px;cursor:pointer}
+
+    /* ============================ الواجهة الرئيسية (Hero) ============================
+       💡 لتغيير خلفية الواجهة: ضع صورتك في المسار assets/hero-bg.jpg
+       ============================================================================ */
+    .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:130px 0 150px;
+      background:url('assets/hero-bg.jpg') center/cover no-repeat fixed}
+    .hero::before{content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(38,3,10,.82) 0%,rgba(90,6,20,.55) 45%,rgba(26,2,7,.85) 100%)}
+    .hero-inner{position:relative;z-index:2;color:#fff;max-width:820px;margin-inline:auto;padding-inline:20px}
+    .hero .tag{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 20px;border-radius:999px;font-size:14px;font-weight:500;backdrop-filter:blur(6px)}
+    .hero .tag .dot{width:8px;height:8px;border-radius:50%;background:#ff5d73;box-shadow:0 0 0 4px rgba(255,93,115,.3);animation:pulse 1.6s infinite}
+    @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(255,93,115,0)}}
+    .hero h1{font-size:clamp(38px,7vw,72px);font-weight:900;margin:26px 0 10px;text-shadow:0 10px 40px rgba(0,0,0,.4)}
+    .hero h1 em{font-style:normal;color:#ff97a4;position:relative}
+    .hero p.lead{font-size:clamp(16px,2.2vw,20px);color:rgba(255,255,255,.9);max-width:600px;margin:0 auto 36px}
+    .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .hero-badges{display:flex;gap:34px;justify-content:center;flex-wrap:wrap;margin-top:52px}
+    .hero-badges div{display:flex;flex-direction:column;gap:4px;font-size:13px;color:rgba(255,255,255,.85)}
+    .hero-badges b{font-size:22px;font-family:var(--font-head);color:#fff}
+    .scroll-cue{position:absolute;bottom:26px;inset-inline-start:50%;transform:translateX(50%);z-index:2;color:#fff;font-size:22px;animation:float 2s infinite}
+    @keyframes float{50%{transform:translateX(50%) translateY(8px)}}
+
+    /* شريط المعلومات العائم */
+    .info-strip{margin-top:-70px;position:relative;z-index:5}
+    .info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .info-card{background:var(--paper);border-radius:var(--radius);padding:28px 24px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;border-bottom:4px solid var(--red-500);transition:transform .3s}
+    .info-card:hover{transform:translateY(-8px)}
+    .info-card .ico{width:54px;height:54px;flex:none;border-radius:16px;background:var(--red-tint);display:grid;place-items:center;font-size:26px}
+    .info-card h3{font-size:17px;margin-bottom:4px}
+    .info-card p{color:var(--muted);font-size:14px}
+
+    /* ============================ عن المطعم ============================ */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .about-media{position:relative}
+    .about-media .frame{border-radius:26px;overflow:hidden;box-shadow:0 24px 60px rgba(36,20,24,.22)}
+    .about-media .frame img{aspect-ratio:4/3;object-fit:cover;width:100%}
+    .about-media::after{content:"";position:absolute;inset-inline-end:-16px;inset-block-end:-16px;width:60%;height:60%;border:3px solid var(--red-500);border-radius:26px;z-index:-1}
+    .exp-badge{position:absolute;inset-block-start:22px;inset-inline-start:-18px;background:linear-gradient(135deg,var(--red-500),var(--red-700));color:#fff;border-radius:18px;padding:16px 22px;text-align:center;box-shadow:0 14px 34px rgba(200,16,46,.45)}
+    .exp-badge b{display:block;font-size:30px;font-family:var(--font-head);line-height:1}
+    .exp-badge span{font-size:12px;opacity:.9}
+    .about-copy h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin:12px 0 16px}
+    .about-copy p{color:var(--muted);font-size:16.5px;margin-bottom:14px}
+    .feat-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0 34px}
+    .feat-list li{display:flex;gap:12px;align-items:flex-start;font-weight:500;font-size:15px}
+    .feat-list .fi{width:40px;height:40px;flex:none;border-radius:12px;background:var(--red-tint);color:var(--red-600);display:grid;place-items:center;font-size:18px}
+
+    /* ============================ قائمة الطعام ============================ */
+    #menu{background:linear-gradient(180deg,#2b050c,#420a15 55%,#2b050c);color:#fff;position:relative;overflow:hidden}
+    #menu::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 10%,rgba(224,22,47,.16),transparent 40%),radial-gradient(circle at 10% 90%,rgba(224,22,47,.14),transparent 45%)}
+    #menu .container{position:relative}
+    #menu .sec-head p{color:rgba(255,255,255,.75)}
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .dish{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:28px 26px;backdrop-filter:blur(4px);transition:transform .3s,background .3s,border-color .3s;position:relative}
+    .dish:hover{transform:translateY(-8px);background:rgba(255,255,255,.1);border-color:var(--red-500)}
+    .dish .emoji{font-size:40px;display:inline-block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+    .dish h3{font-size:19px;margin:14px 0 8px}
+    .dish p{color:rgba(255,255,255,.72);font-size:14px;min-height:44px}
+    .dish .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.18)}
+    .dish .price{font-family:var(--font-head);font-weight:800;font-size:21px;color:#ff97a4}
+    .dish .price small{font-size:12px;font-weight:500;color:rgba(255,255,255,.65)}
+    .dish .chip{background:rgba(224,22,47,.2);color:#ff97a4;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;border:1px solid rgba(224,22,47,.35)}
+    .menu-note{text-align:center;margin-top:40px;color:rgba(255,255,255,.6);font-size:14px}
+
+    /* ============================ لماذا نحن ============================ */
+    .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .why-card{background:var(--paper);border-radius:var(--radius);padding:34px 26px;text-align:center;box-shadow:var(--shadow);transition:transform .3s;position:relative;overflow:hidden}
+    .why-card::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:100%;height:4px;background:linear-gradient(90deg,var(--red-500),var(--red-700));transform:scaleX(0);transform-origin:right;transition:transform .35s}
+    .why-card:hover{transform:translateY(-8px)}
+    .why-card:hover::before{transform:scaleX(1)}
+    .why-card .ico{width:70px;height:70px;margin:0 auto 18px;border-radius:22px;background:var(--red-tint);display:grid;place-items:center;font-size:32px}
+    .why-card h3{font-size:18px;margin-bottom:8px}
+    .why-card p{color:var(--muted);font-size:14px}
+
+    /* ============================ آراء الضيوف ============================ */
+    #reviews{background:var(--red-tint)}
+    .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .review{background:var(--paper);border-radius:var(--radius);padding:30px 26px;box-shadow:var(--shadow);position:relative}
+    .review .quote{position:absolute;inset-block-start:18px;inset-inline-end:24px;font-family:Georgia,serif;font-size:64px;line-height:1;color:var(--red-tint)}
+    .stars{color:#f5b301;font-size:15px;letter-spacing:2px;margin-bottom:12px}
+    .review p{font-size:15px;color:#4d383d;margin-bottom:20px}
+    .review .who{display:flex;align-items:center;gap:12px}
+    .review .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--red-500),var(--red-700));color:#fff;display:grid;place-items:center;font-family:var(--font-head);font-weight:800;font-size:17px}
+    .review .who b{display:block;font-size:15px}
+    .review .who span{font-size:12.5px;color:var(--muted)}
+
+    /* ============================ الحجز والتواصل ============================ */
+    .reserve-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start}
+    .res-form{background:var(--paper);border-radius:24px;padding:36px;box-shadow:var(--shadow)}
+    .res-form h3{font-size:22px;margin-bottom:6px}
+    .res-form>p{color:var(--muted);font-size:14px;margin-bottom:24px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#5d4147}
+    .field input,.field select,.field textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-family:var(--font-body);font-size:15px;background:var(--cream);transition:border-color .25s,background .25s;color:var(--ink)}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--red-500);background:#fff}
+    .field textarea{resize:vertical;min-height:84px}
+    .res-side{display:flex;flex-direction:column;gap:18px}
+    .res-card{background:linear-gradient(135deg,var(--red-600),var(--red-800));color:#fff;border-radius:20px;padding:26px;display:flex;gap:16px;align-items:center;box-shadow:0 16px 40px rgba(163,13,37,.35)}
+    .res-card .ico{width:52px;height:52px;flex:none;border-radius:15px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:24px}
+    .res-card b{display:block;font-size:16px;margin-bottom:2px}
+    .res-card span{font-size:14px;opacity:.9;direction:ltr;display:inline-block}
+    .res-card.wa{background:linear-gradient(135deg,#1faa53,#0d7a39);box-shadow:0 16px 40px rgba(13,122,57,.35)}
+
+    /* ============================ التذييل ============================ */
+    footer{background:#1d0309;color:rgba(255,255,255,.75);padding:64px 0 0;position:relative}
+    footer::before{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:100%;height:4px;background:linear-gradient(90deg,var(--red-500),var(--red-800))}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:44px}
+    .foot-grid .brand{color:#fff;margin-bottom:14px}
+    .foot-grid p{font-size:14px;max-width:340px}
+    .foot-grid h4{color:#fff;font-size:16px;margin-bottom:16px}
+    .foot-grid ul li{margin-bottom:10px;font-size:14.5px}
+    .foot-grid ul a:hover{color:#ff97a4}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding:20px 0;text-align:center;font-size:13.5px}
+    .foot-bottom b{color:#ff97a4}
+
+    /* زر العودة للأعلى */
+    .to-top{position:fixed;inset-block-end:26px;inset-inline-start:26px;width:50px;height:50px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--red-500),var(--red-700));color:#fff;font-size:20px;cursor:pointer;box-shadow:0 10px 26px rgba(200,16,46,.45);opacity:0;visibility:hidden;transform:translateY(14px);transition:.35s;z-index:900}
+    .to-top.show{opacity:1;visibility:visible;transform:none}
+
+    /* حركات الظهور */
+    .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    /* ============================ الاستجابة ============================ */
+    @media(max-width:980px){
+      .nav-links,.topbar .btn{display:none}
+      .burger{display:block}
+      .info-cards{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr;gap:44px}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .why-grid{grid-template-columns:repeat(2,1fr)}
+      .reviews-grid{grid-template-columns:1fr}
+      .reserve-grid{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:600px){
+      section{padding:64px 0}
+      .menu-grid{grid-template-columns:1fr}
+      .why-grid{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr}
+      .hero{background-attachment:scroll}
+      .exp-badge{inset-inline-start:10px}
+    }
+    /* قائمة الجوال */
+    .mobile-menu{position:fixed;inset-block-start:0;inset-inline:0;z-index:1100;background:rgba(32,3,9,.98);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;visibility:hidden;transition:.35s}
+    .mobile-menu.open{opacity:1;visibility:visible}
+    .mobile-menu a{color:#fff;font-size:22px;font-family:var(--font-head);font-weight:700;padding:12px 30px;border-radius:999px;transition:.25s}
+    .mobile-menu a:hover{background:rgba(224,22,47,.25);color:#ff97a4}
+    .mobile-menu .close{position:absolute;inset-block-start:22px;inset-inline-start:22px;background:none;border:0;color:#fff;font-size:30px;cursor:pointer}
+  </style>
+</head>
+<body>
+
+  <!-- الشريط العلوي -->
+  <nav class="topbar" id="topbar">
+    <div class="container">
+      <a href="#home" class="brand">
+        <span class="mark">🔥</span>
+        <span><b>مطعم الأصالة</b><small>EL-ASALA RESTAURANT</small></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#about">عن المطعم</a></li>
+        <li><a href="#menu">قائمة الطعام</a></li>
+        <li><a href="#reviews">آراء الضيوف</a></li>
+        <li><a href="#reserve">تواصل معنا</a></li>
+      </ul>
+      <a href="#reserve" class="btn btn-red">احجز طاولتك</a>
+      <button class="burger" id="burger" aria-label="القائمة">☰</button>
+    </div>
+  </nav>
+
+  <!-- قائمة الجوال -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close" id="menuClose" aria-label="إغلاق">✕</button>
+    <a href="#home">الرئيسية</a>
+    <a href="#about">عن المطعم</a>
+    <a href="#menu">قائمة الطعام</a>
+    <a href="#reviews">آراء الضيوف</a>
+    <a href="#reserve">تواصل معنا</a>
+    <a href="#reserve" class="btn btn-red" style="margin-top:14px">احجز طاولتك</a>
+  </div>
+
+  <!-- ============================ الواجهة الرئيسية ============================ -->
+  <header class="hero" id="home">
+    <div class="hero-inner">
+      <span class="tag"><span class="dot"></span> مفتوح الآن · التوصيل متاح داخل المدينة</span>
+      <h1>نكهة أصيلة<br>في <em>أجواء تجمعنا</em></h1>
+      <p class="lead">من قلب المطبخ إلى مائدتك؛ مشاوي على الفحم، وأطباق شعبية محضّرة بحبّ كل يوم. عيّنط أهل البيت وخلّينا نتكفّل بالباقي.</p>
+      <div class="hero-cta">
+        <a href="#reserve" class="btn btn-red">🍽️ احجز طاولتك الآن</a>
+        <a href="#menu" class="btn btn-ghost">استكشف القائمة</a>
+      </div>
+      <div class="hero-badges">
+        <div><b>15+</b> سنة من الضيافة</div>
+        <div><b>4.8 ★</b> تقييم ضيوفنا</div>
+        <div><b>30 دقيقة</b> متوسط وقت التوصيل</div>
+      </div>
+    </div>
+    <span class="scroll-cue">⌄</span>
+  </header>
+
+  <!-- شريط المعلومات -->
+  <div class="info-strip">
+    <div class="container info-cards">
+      <div class="info-card reveal">
+        <span class="ico">🕒</span>
+        <div><h3>ساعات العمل</h3><p>السبت – الخميس: 7 صباحاً – 12 منتصف الليل<br>الجمعة: 2 ظهراً – 12 منتصف الليل</p></div>
+      </div>
+      <div class="info-card reveal">
+        <span class="ico">🛵</span>
+        <div><h3>توصيل سريع</h3><p>نوصل طلباتك طازجة وساخنة لحد باب البيت داخل المدينة</p></div>
+      </div>
+      <div class="info-card reveal">
+        <span class="ico">👨‍👩‍👧‍👦</span>
+        <div><h3>أقسام عائلية</h3><p>صالات عائلية مجهزة بأجواء هادئة وخدمة مميزة</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ عن المطعم ============================ -->
+  <section id="about">
+    <div class="container about-grid">
+      <div class="about-media reveal">
+        <div class="frame"><img src="assets/about.jpg" alt="أطباق مطعم الأصالة"></div>
+        <div class="exp-badge"><b>15+</b><span>سنة ضيافة</span></div>
+      </div>
+      <div class="about-copy reveal">
+        <span class="eyebrow">قصتنا</span>
+        <h2>مطبخ يحكي<br>عاداتنا الكريمة</h2>
+        <p>منذ أكثر من خمس عشرة سنة ونحن نقدّم الطعام كما يجب أن يكون: مكونات طازجة تُختار كل صباح، ونار هادئة، ويد أمينة تعرف قيمة «البركة» في الأكل.</p>
+        <p>في الأصالة ما بنجيك بكلام المنيو، بنجيك بطعم الزول الجالس في بيتك.</p>
+        <ul class="feat-list">
+          <li><span class="fi">🥩</span> لحوم بلدية طازجة يومياً</li>
+          <li><span class="fi">🔥</span> مشاوي على الفحم مباشرة</li>
+          <li><span class="fi">🧺</span> خضار من السوق اليومي</li>
+          <li><span class="fi">✨</span> نظافة ومذاق ما بيختلج</li>
+        </ul>
+        <a href="#menu" class="btn btn-red">شوف قائمة الطعام</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ قائمة الطعام ============================ -->
+  <section id="menu">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow" style="color:#ff97a4">قائمتنا</span>
+        <h2>أشهر أطباقنا</h2>
+        <p>مختارات من أساسيات مطبخنا — تُحضّر عند الطلب وبتوابلنا الخاصة</p>
+      </div>
+      <div class="menu-grid">
+        <div class="dish reveal">
+          <span class="emoji">🍢</span>
+          <h3>مشاوي مشكل</h3>
+          <p>سيخ لحم بلدي وكبدة وشيش طاووق مع أرز بخاري وسلطة</p>
+          <div class="price-row"><span class="price">45 <small>ج.س</small></span><span class="chip">الأكثر طلباً</span></div>
+        </div>
+        <div class="dish reveal">
+          <span class="emoji">🍛</span>
+          <h3>كبسة لحم</h3>
+          <p>أرز بالبهار الخليجي مع قطع لحم ضأن وتوابلنا السرية</p>
+          <div class="price-row"><span class="price">40 <small>ج.س</small></span></div>
+        </div>
+        <div class="dish reveal">
+          <span class="emoji">🫘</span>
+          <h3>فول سوداني</h3>
+          <p>فول بالزيت الحار والكمون — طبق الصباح الأول عندنا</p>
+          <div class="price-row"><span class="price">12 <small>ج.س</small></span><span class="chip">فطورنا</span></div>
+        </div>
+        <div class="dish reveal">
+          <span class="emoji">🧆</span>
+          <h3>طعمية مقرمشة</h3>
+          <p>قرمشة من بره وطيوبة من جوه، مع سلطة وخبز طازج</p>
+          <div class="price-row"><span class="price">10 <small>ج.س</small></span></div>
+        </div>
+        <div class="dish reveal">
+          <span class="emoji">🍲</span>
+          <h3>ملوخية بالفراخ</h3>
+          <p>ملوخية خضراء مدهونة على أصولها مع فراخ مسلوقة</p>
+          <div class="price-row"><span class="price">35 <small>ج.س</small></span></div>
+        </div>
+        <div class="dish reveal">
+          <span class="emoji">🥤</span>
+          <h3>عصائر طازجة</h3>
+          <p>كركدي، مانجو، جوافة، وليمون بالنعناع — سلق طازة</p>
+          <div class="price-row"><span class="price">8 <small>ج.س</small></span><span class="chip">منعش</span></div>
+        </div>
+      </div>
+      <p class="menu-note">* الأسعار قابلة للتغيير — القائمة الكاملة متوفرة داخل المطعم</p>
+    </div>
+  </section>
+
+  <!-- ============================ لماذا نحن ============================ -->
+  <section id="why">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">ليه الأصالة؟</span>
+        <h2>حاجات بخلّينا مختلفين</h2>
+        <p>بنشتغل بمبدأ واحد: الضيف زولنا</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal"><span class="ico">🌿</span><h3>مكونات طازجة</h3><p>تسوق يومي من السوق، وما بنخزّن مكونات لليوم التاني</p></div>
+        <div class="why-card reveal"><span class="ico">👨‍🍳</span><h3>طباخين خبرة</h3><p>فريق مطبخنا اشتغل في أعرق المطاعم وبعرفوا طعم الزول</p></div>
+        <div class="why-card reveal"><span class="ico">⚡</span><h3>خدمة سريعة</h3><p>طلبك يوصل سخن وقرميش في وقت قياسي</p></div>
+        <div class="why-card reveal"><span class="ico">💰</span><h3>أسعار مريحة</h3><p>كفاية بذاتها لكل العيلة، من غير ما تدقق في الفاتورة</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ آراء الضيوف ============================ -->
+  <section id="reviews">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">آراء ضيوفنا</span>
+        <h2>كلامهم يشهد لينا</h2>
+        <p>تقييمات حقيقية من ضيوفنا الكرام</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review reveal">
+          <span class="quote">”</span>
+          <div class="stars">★★★★★</div>
+          <p>المشاوي عندهم طعمها ما بيتهجّى، والخدمة سريعة جداً. بقت عادتنا كل خميس.</p>
+          <div class="who"><span class="av">أ</span><div><b>أحمد م.</b><span>ضيف دائم</span></div></div>
+        </div>
+        <div class="review reveal">
+          <span class="quote">”</span>
+          <div class="stars">★★★★★</div>
+          <p>القسم العائلي هادئ ونظيف، والعيّال استمتعوا بالكبسة. تسلم إيديكم.</p>
+          <div class="who"><span class="av">س</span><div><b>سارة ع.</b><span>زيارة عائلية</span></div></div>
+        </div>
+        <div class="review reveal">
+          <span class="quote">”</span>
+          <div class="stars">★★★★☆</div>
+          <p>التوصيل وصل قبل الوقت المتفق عليه والأكل زي ما طلبتو بالظبط. تجربة ممتازة.</p>
+          <div class="who"><span class="av">م</span><div><b>محمد ط.</b><span>طلب توصيل</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ الحجز والتواصل ============================ -->
+  <section id="reserve">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">احجز طاولتك</span>
+        <h2>بانتظارك على طول</h2>
+        <p>عبّي النموذج وبيوصلك تأكيد الحجز عبر واتساب في ثوانٍ</p>
+      </div>
+      <div class="reserve-grid">
+        <form class="res-form reveal" id="resForm">
+          <h3>تفاصيل الحجز</h3>
+          <p>الحجز مجاني ويُثبّت لمدة 30 دقيقة من الموعد</p>
+          <div class="form-row">
+            <div class="field"><label for="rName">الاسم</label><input id="rName" required placeholder="اسمك الكريم"></div>
+            <div class="field"><label for="rPhone">رقم الجوال</label><input id="rPhone" required type="tel" placeholder="09xxxxxxxx" dir="ltr"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="rDate">التاريخ</label><input id="rDate" required type="date"></div>
+            <div class="field"><label for="rTime">الوقت</label><input id="rTime" required type="time" value="19:30"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="rGuests">عدد الضيوف</label>
+              <select id="rGuests">
+                <option>شخصان</option><option selected>4 أشخاص</option><option>6 أشخاص</option><option>8 أشخاص</option><option>أكثر من 8</option>
+              </select>
+            </div>
+            <div class="field"><label for="rType">نوع الجلسة</label>
+              <select id="rType"><option>قسم عائلي</option><option>صالة عامة</option><option>طلّة خارجية</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="rNotes">ملاحظات إضافية</label><textarea id="rNotes" placeholder="مناسبة خاصة؟ حساسية من أطعمة؟ اكتبها هنا..."></textarea></div>
+          <button type="submit" class="btn btn-red" style="width:100%">إرسال طلب الحجز 📩</button>
+        </form>
+        <div class="res-side">
+          <a class="res-card reveal" href="tel:+249912345678">
+            <span class="ico">📞</span>
+            <div><b>اتصل بنا</b><span>+249 91 234 5678</span></div>
+          </a>
+          <a class="res-card wa reveal" href="https://wa.me/249912345678" target="_blank" rel="noopener">
+            <span class="ico">💬</span>
+            <div><b>واتساب المطعم</b><span>+249 91 234 5678</span></div>
+          </a>
+          <div class="res-card reveal">
+            <span class="ico">📍</span>
+            <div><b>موقعنا</b><span style="direction:rtl">أم درمان — شارع الحرية، جوار السوق الكبير</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ التذييل ============================ -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <a href="#home" class="brand"><span class="mark">🔥</span><span><b>مطعم الأصالة</b><small>EL-ASALA RESTAURANT</small></span></a>
+          <p>مطعم سوداني أصيل يقدّم المشاوي والأطباق الشعبية بمكونات طازجة وأجواء عائلية دافئة منذ أكثر من 15 سنة.</p>
+        </div>
+        <div>
+          <h4>روابط سريعة</h4>
+          <ul>
+            <li><a href="#about">عن المطعم</a></li>
+            <li><a href="#menu">قائمة الطعام</a></li>
+            <li><a href="#reviews">آراء الضيوف</a></li>
+            <li><a href="#reserve">احجز طاولة</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>تواصل معنا</h4>
+          <ul>
+            <li>📞 <span dir="ltr">+249 91 234 5678</span></li>
+            <li>📍 أمدارة — شارع الحرية</li>
+            <li>🕒 يومياً حتى منتصف الليل</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">© <span id="year"></span> مطعم الأصالة — جميع الحقوق محفوظة · صُنع بـ <b>❤</b> في أم درمان</div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="العودة للأعلى">↑</button>
+
+  <script>
+    // حالة الشريط العلوي عند التمرير
+    const topbar=document.getElementById('topbar'),toTop=document.getElementById('toTop');
+    addEventListener('scroll',()=>{
+      topbar.classList.toggle('scrolled',scrollY>60);
+      toTop.classList.toggle('show',scrollY>500);
+    });
+    toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+    // قائمة الجوال
+    const mm=document.getElementById('mobileMenu');
+    document.getElementById('burger').addEventListener('click',()=>mm.classList.add('open'));
+    document.getElementById('menuClose').addEventListener('click',()=>mm.classList.remove('open'));
+    mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+
+    // حركات الظهور عند التمرير
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.15});
+    document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*70)+'ms';io.observe(el);});
+
+    // إرسال الحجز عبر واتساب
+    const WA_NUMBER='249912345678'; // ← غيّر رقم الواتساب هنا
+    document.getElementById('resForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const v=id=>document.getElementById(id).value.trim();
+      const msg=`طلب حجز جديد 🍽️%0A────────────%0A👤 الاسم: ${v('rName')}%0A📞 الجوال: ${v('rPhone')}%0A📅 التاريخ: ${v('rDate')}%0A⏰ الوقت: ${v('rTime')}%0A👥 الضيوف: ${v('rGuests')}%0A🪑 الجلسة: ${v('rType')}`+(v('rNotes')?`%0A📝 ملاحظات: ${v('rNotes')}`:'');
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
+    });
+
+    // السنة الحالية
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
