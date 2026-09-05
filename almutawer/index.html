@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>المطور للحلول الرقمية | مواقع إلكترونية، متاجر وأنظمة إدارية</title>
+  <meta name="description" content="المطور — وكالة حلول رقمية نبني مواقع إلكترونية احترافية، متاجر إلكترونية وأنظمة إدارية متكاملة بتصميم عصري وأداء فائق. حوّل فكرتك إلى منتج رقمي ناجح.">
+  <meta name="keywords" content="المطور, حلول رقمية, تصميم مواقع, متاجر إلكترونية, أنظمة إدارية, برمجة, تطوير ويب, السودان, الخرطوم">
+  <meta name="author" content="المطور للحلول الرقمية">
+  <meta name="theme-color" content="#05080f">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_SD">
+  <meta property="og:title" content="المطور للحلول الرقمية">
+  <meta property="og:description" content="نبني مواقع إلكترونية، متاجر وأنظمة إدارية تحوّل أفكارك إلى نجاح قابل للقياس.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M26 22l-10 10 10 10M38 22l10 10-10 10' stroke='white' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "المطور للحلول الرقمية",
+    "description": "وكالة حلول رقمية: بناء مواقع إلكترونية، متاجر إلكترونية وأنظمة إدارية",
+    "address": { "@type": "PostalAddress", "addressLocality": "أم درمان", "addressRegion": "الخرطوم", "addressCountry": "SD" },
+    "contactPoint": { "@type": "ContactPoint", "telephone": "+249-90-123-4567", "contactType": "customer service" }
+  }
+  </script>
+  <style>
+  /* ============ الأساسيات ============ */
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#05080f;
+    --bg-2:#0a101d;
+    --surface:rgba(255,255,255,.035);
+    --surface-2:rgba(255,255,255,.07);
+    --border:rgba(255,255,255,.09);
+    --text:#edf1fa;
+    --text-2:#a3adc4;
+    --muted:#64708c;
+    --primary:#22d3ee;
+    --primary-2:#6366f1;
+    --accent:#a855f7;
+    --grad:linear-gradient(120deg,#22d3ee,#6366f1 55%,#a855f7);
+    --wa:#25d366;
+    --ok:#34d399;
+    --amber:#fbbf24;
+    --err:#f87171;
+    --radius:18px;
+    --font:'Cairo','Segoe UI',Tahoma,system-ui,sans-serif;
+    --container:1200px;
+    --nav-h:74px;
+    --ease:cubic-bezier(.22,.7,.3,1);
+  }
+  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 18px)}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none}
+  button{font-family:inherit;cursor:pointer}
+  ::selection{background:rgba(99,102,241,.45);color:#fff}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg-2)}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--primary),var(--primary-2));border-radius:99px;border:2px solid var(--bg-2)}
+  :focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:4px}
+  .container{width:min(100% - 2.5rem,var(--container));margin-inline:auto}
+
+  /* ============ الأزرار ============ */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;font-family:inherit;font-weight:700;font-size:.98rem;padding:.8rem 1.8rem;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:.35s var(--ease);line-height:1.6;white-space:nowrap}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -10px rgba(99,102,241,.6)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 44px -12px rgba(99,102,241,.75);filter:saturate(1.15)}
+  .btn-ghost{border-color:var(--border);color:var(--text);background:var(--surface)}
+  .btn-ghost:hover{border-color:rgba(34,211,238,.5);background:var(--surface-2);transform:translateY(-3px)}
+  .btn-lg{padding:1rem 2.2rem;font-size:1.05rem;border-radius:16px}
+  .btn-sm{padding:.55rem 1.3rem;font-size:.88rem;border-radius:12px}
+  .btn-wa{background:var(--wa);color:#fff;box-shadow:0 10px 30px -10px rgba(37,211,102,.55)}
+  .btn-wa:hover{transform:translateY(-3px);box-shadow:0 16px 40px -12px rgba(37,211,102,.7)}
+
+  /* ============ شريط التنقل ============ */
+  .nav{position:fixed;inset-inline:0;top:0;z-index:100;border-bottom:1px solid transparent;transition:background .4s,border-color .4s,box-shadow .4s}
+  .nav.scrolled{background:rgba(5,9,17,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-color:var(--border);box-shadow:0 12px 40px -16px rgba(0,0,0,.7)}
+  .nav-inner{display:flex;align-items:center;gap:1.6rem;height:var(--nav-h)}
+  .brand{display:flex;align-items:center;gap:.7rem}
+  .brand-mark{width:42px;height:42px;flex-shrink:0}
+  .brand-txt{font-weight:900;font-size:1.3rem;line-height:1.2}
+  .brand-txt span{display:block;font-size:.62rem;font-weight:600;color:var(--muted)}
+  .nav-links{display:flex;gap:.25rem;margin-inline-start:auto}
+  .nav-links a{padding:.45rem .85rem;font-size:.94rem;font-weight:600;color:var(--text-2);border-radius:10px;transition:color .3s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:1px;inset-inline:calc(50% - 13px);height:2px;background:var(--grad);border-radius:2px;transform:scaleX(0);transition:transform .3s var(--ease)}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a.active{color:var(--primary)}
+  .nav-links a.active::after{transform:scaleX(1)}
+  .nav-cta{margin-inline-start:.4rem}
+  .nav-toggle{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-inline-start:auto}
+  .nav-toggle span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:.35s var(--ease)}
+  body.menu-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  body.menu-open .nav-toggle span:nth-child(2){opacity:0}
+  body.menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  .mobile-menu{position:fixed;inset:0;z-index:99;background:rgba(4,7,14,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.35rem;opacity:0;visibility:hidden;transition:.4s}
+  .mobile-menu.open{opacity:1;visibility:visible}
+  .mobile-menu a{font-size:1.35rem;font-weight:700;color:var(--text-2);transform:translateY(14px);opacity:0;transition:.4s var(--ease)}
+  .mobile-menu.open a{transform:none;opacity:1;transition-delay:calc(.05s * var(--i,0))}
+  .mobile-menu a:hover,.mobile-menu a.active{color:var(--primary)}
+  .mobile-menu .btn{font-size:1.05rem}
+
+  /* ============ الهيرو ============ */
+  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 3.5rem) 0 5rem;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
+  .orb-1{width:540px;height:540px;background:radial-gradient(circle,rgba(34,211,238,.34),transparent 65%);top:-160px;inset-inline-start:-140px;animation:drift 19s ease-in-out infinite alternate}
+  .orb-2{width:640px;height:640px;background:radial-gradient(circle,rgba(99,102,241,.34),transparent 65%);bottom:-240px;inset-inline-end:-170px;animation:drift 23s ease-in-out infinite alternate-reverse}
+  .orb-3{width:400px;height:400px;background:radial-gradient(circle,rgba(168,85,247,.24),transparent 65%);top:32%;inset-inline-start:44%;animation:drift 27s ease-in-out infinite alternate}
+  @keyframes drift{to{transform:translate(70px,50px) scale(1.18)}}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.038) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.038) 1px,transparent 1px);background-size:58px 58px;-webkit-mask-image:radial-gradient(ellipse 72% 62% at 50% 42%,#000 18%,transparent 72%);mask-image:radial-gradient(ellipse 72% 62% at 50% 42%,#000 18%,transparent 72%)}
+  #particles{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+  .hero::after{content:'';position:absolute;inset-inline:0;bottom:0;height:170px;background:linear-gradient(180deg,transparent,var(--bg));z-index:1;pointer-events:none}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:920px;margin-inline:auto}
+  .badge{display:inline-flex;align-items:center;gap:.55rem;padding:.4rem 1.15rem;border-radius:99px;border:1px solid var(--border);background:rgba(10,16,29,.6);backdrop-filter:blur(8px);font-size:.84rem;font-weight:600;color:var(--text-2);margin-bottom:1.7rem}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);position:relative;flex-shrink:0}
+  .badge .dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(52,211,153,.45);animation:ping 1.9s ease-out infinite}
+  @keyframes ping{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.55);opacity:0}}
+  .hero-title{font-size:clamp(2.35rem,6.2vw,4.2rem);font-weight:900;line-height:1.45;margin-bottom:1.1rem}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .typed-line{font-size:clamp(1.05rem,2.6vw,1.45rem);font-weight:700;min-height:2.4em;margin-bottom:.6rem}
+  .typed-line .static{color:var(--text-2);font-weight:600}
+  .typed{color:var(--primary)}
+  .cursor{display:inline-block;width:2px;height:1.15em;background:var(--primary);vertical-align:-.18em;margin-inline-start:3px;animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero-sub{font-size:clamp(.98rem,1.8vw,1.12rem);color:var(--text-2);max-width:660px;margin:0 auto 2.6rem}
+  .hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.6rem}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:840px;margin-inline:auto;border-top:1px solid var(--border);padding-top:2.2rem}
+  .stat{text-align:center}
+  .stat-num{display:block;font-size:clamp(1.6rem,3.4vw,2.35rem);font-weight:900;line-height:1.4}
+  .stat-label{font-size:.86rem;color:var(--muted);font-weight:600}
+  .scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.45rem;color:var(--muted);font-size:.72rem;font-weight:600}
+  .mouse{width:23px;height:36px;border:2px solid var(--muted);border-radius:13px;position:relative}
+  .mouse::after{content:'';position:absolute;top:6px;left:50%;width:3px;height:7px;background:var(--primary);border-radius:3px;transform:translateX(-50%);animation:wheel 1.7s ease infinite}
+  @keyframes wheel{0%{opacity:1;top:6px}72%{opacity:0;top:18px}100%{opacity:0;top:6px}}
+
+  /* ============ الشريط المتحرك ============ */
+  .marquee{position:relative;border-block:1px solid var(--border);padding:1.15rem 0;overflow:hidden;background:rgba(255,255,255,.014)}
+  .marquee::before,.marquee::after{content:'';position:absolute;top:0;bottom:0;width:130px;z-index:2;pointer-events:none}
+  .marquee::before{inset-inline-start:0;background:linear-gradient(to left,var(--bg),transparent)}
+  .marquee::after{inset-inline-end:0;background:linear-gradient(to right,var(--bg),transparent)}
+  .marquee-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
+  .marquee-group{display:flex;align-items:center}
+  .m-item{white-space:nowrap;font-weight:700;font-size:1rem;color:var(--text-2)}
+  .m-sep{width:7px;height:7px;background:var(--grad);transform:rotate(45deg);border-radius:2px;flex-shrink:0;margin-inline:2.7rem}
+  @keyframes marquee{to{transform:translateX(50%)}}
+
+  /* ============ الأقسام العامة ============ */
+  .section{padding:110px 0;position:relative}
+  .section-alt{background:linear-gradient(180deg,rgba(255,255,255,.017),rgba(255,255,255,.017))}
+  .section-head{text-align:center;max-width:740px;margin:0 auto 4rem}
+  .kicker{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem 1.15rem;border-radius:99px;border:1px solid rgba(34,211,238,.25);background:rgba(34,211,238,.07);color:var(--primary);font-size:.84rem;font-weight:700;margin-bottom:1.1rem}
+  .section-title{font-size:clamp(1.7rem,4vw,2.55rem);font-weight:900;line-height:1.55;margin-bottom:.9rem}
+  .section-desc{color:var(--text-2);font-size:1.02rem}
+
+  /* ============ الخدمات ============ */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .service-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.8rem;transition:transform .45s var(--ease),border-color .45s,box-shadow .45s;overflow:hidden}
+  .service-card::before{content:'';position:absolute;inset:0;background:radial-gradient(560px circle at var(--mx,50%) var(--my,0%),rgba(99,102,241,.13),transparent 45%);opacity:0;transition:opacity .4s;pointer-events:none}
+  .service-card:hover{transform:translateY(-8px);border-color:rgba(99,102,241,.45);box-shadow:0 26px 55px -26px rgba(0,0,0,.75)}
+  .service-card:hover::before{opacity:1}
+  .service-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(34,211,238,.13),rgba(99,102,241,.15));border:1px solid rgba(99,102,241,.3);color:var(--primary);margin-bottom:1.3rem;transition:.4s var(--ease)}
+  .service-icon svg{width:26px;height:26px}
+  .service-card:hover .service-icon{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.06);box-shadow:0 8px 24px -6px rgba(99,102,241,.6)}
+  .service-card h3{font-size:1.18rem;font-weight:800;margin-bottom:.55rem}
+  .service-card p{color:var(--text-2);font-size:.93rem;margin-bottom:1.15rem}
+  .service-more{display:inline-flex;align-items:center;gap:.45rem;color:var(--primary);font-weight:700;font-size:.9rem;opacity:0;transform:translateX(-10px);transition:.35s var(--ease)}
+  .service-more svg{width:16px;height:16px}
+  .service-card:hover .service-more{opacity:1;transform:none}
+
+  /* ============ الأعمال ============ */
+  .filter-bar{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-bottom:2.6rem}
+  .filter-btn{padding:.5rem 1.35rem;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text-2);font-weight:700;font-size:.9rem;transition:.3s}
+  .filter-btn:hover{color:var(--text);border-color:rgba(255,255,255,.28)}
+  .filter-btn.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 20px -6px rgba(99,102,241,.55)}
+  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .work-card{border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);transition:transform .45s var(--ease),border-color .45s,box-shadow .45s}
+  .work-card:hover{transform:translateY(-8px);border-color:rgba(99,102,241,.42);box-shadow:0 26px 55px -26px rgba(0,0,0,.75)}
+  .work-thumb{position:relative;aspect-ratio:16/10;overflow:hidden}
+  .work-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .65s var(--ease)}
+  .work-card:hover .work-thumb img{transform:scale(1.07)}
+  .work-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,15,.15),rgba(5,8,15,.88));opacity:0;transition:.4s;display:flex;align-items:center;justify-content:center}
+  .work-card:hover .work-overlay{opacity:1}
+  .work-overlay .btn{transform:translateY(12px);transition:.4s var(--ease)}
+  .work-card:hover .work-overlay .btn{transform:none}
+  .work-tag{position:absolute;top:12px;inset-inline-start:12px;padding:.22rem .85rem;border-radius:99px;font-size:.74rem;font-weight:700;background:rgba(5,9,17,.72);border:1px solid var(--border);color:var(--text-2);backdrop-filter:blur(8px);z-index:2}
+  .work-info{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 1.25rem}
+  .work-info h3{font-size:1.02rem;font-weight:800;line-height:1.6}
+  .work-info span{color:var(--muted);font-size:.8rem;font-weight:600}
+  .work-arrow{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;color:var(--text-2);flex-shrink:0;transition:.3s}
+  .work-arrow svg{width:16px;height:16px}
+  .work-card:hover .work-arrow{background:var(--grad);color:#fff;border-color:transparent}
+  .hide{display:none!important}
+  .pop{animation:fadeUp .55s var(--ease) both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+  /* ============ لماذا نحن ============ */
+  .why-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4.5rem;align-items:center}
+  .why-content .section-head{margin:0 0 .5rem;text-align:right}
+  .why-lead{color:var(--text-2);font-size:1rem}
+  .why-list{display:grid;grid-template-columns:1fr 1fr;gap:1.35rem;margin-top:2.1rem}
+  .feat{display:flex;gap:.95rem;align-items:flex-start}
+  .feat-ic{width:46px;height:46px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.28);color:var(--ok)}
+  .feat-ic svg{width:22px;height:22px}
+  .feat h4{font-size:.99rem;font-weight:800;margin-bottom:.15rem}
+  .feat p{font-size:.85rem;color:var(--text-2);line-height:1.75}
+  .why-visual{position:relative}
+  .code-window{background:#0b1020;border:1px solid var(--border);border-radius:18px;box-shadow:0 45px 90px -32px rgba(0,0,0,.85);overflow:hidden}
+  .code-head{display:flex;align-items:center;gap:.95rem;padding:.8rem 1.15rem;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+  .dots{display:flex;gap:.45rem}
+  .dots i{width:11px;height:11px;border-radius:50%}
+  .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+  .code-title{font-size:.76rem;color:var(--muted);margin-inline-start:auto;direction:ltr;font-family:ui-monospace,monospace}
+  .code-body{padding:1.5rem 1.35rem;direction:ltr;text-align:left;font-family:ui-monospace,'Cascadia Code','Courier New',monospace;font-size:.84rem;line-height:2;overflow-x:auto;color:#a9b7d0}
+  .cl{display:block;white-space:pre;opacity:0;transform:translateY(7px);transition:.5s var(--ease)}
+  .cl.on{opacity:1;transform:none}
+  .tok-k{color:#c792ea}.tok-f{color:#82aaff}.tok-s{color:#c3e88d}.tok-n{color:#f78c6c}.tok-c{color:#5c6a86}
+  .caret{display:inline-block;width:8px;height:14px;background:var(--primary);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+  .float-badge{position:absolute;display:flex;align-items:center;gap:.6rem;padding:.6rem 1.05rem;border-radius:14px;background:rgba(12,17,32,.88);border:1px solid var(--border);backdrop-filter:blur(12px);font-size:.83rem;font-weight:700;box-shadow:0 18px 42px -14px rgba(0,0,0,.75);animation:floaty 6s ease-in-out infinite;z-index:3;white-space:nowrap}
+  .float-badge svg{width:19px;height:19px;flex-shrink:0}
+  .fb-1{top:-24px;inset-inline-end:-10px;color:var(--primary);animation-delay:0s}
+  .fb-2{bottom:-22px;inset-inline-start:-12px;color:var(--ok);animation-delay:1.4s}
+  .fb-3{top:40%;inset-inline-start:-38px;color:var(--accent);animation-delay:2.6s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+  /* ============ خطوات العمل ============ */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  .step{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2.1rem 1.6rem;text-align:center;transition:transform .4s var(--ease),border-color .4s}
+  .step:hover{transform:translateY(-6px);border-color:rgba(34,211,238,.4)}
+  .step-num{font-size:2.5rem;font-weight:900;line-height:1.2;opacity:.95}
+  .step-ic{width:56px;height:56px;margin:.9rem auto 1.15rem;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--border);color:var(--primary);transition:.35s}
+  .step-ic svg{width:24px;height:24px}
+  .step:hover .step-ic{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 22px -6px rgba(99,102,241,.6)}
+  .step h3{font-size:1.06rem;font-weight:800;margin-bottom:.45rem}
+  .step p{font-size:.88rem;color:var(--text-2);line-height:1.8}
+
+  /* ============ آراء العملاء ============ */
+  .t-slider{position:relative;max-width:840px;margin:0 auto}
+  .t-viewport{display:grid}
+  .t-slide{grid-area:1/1;opacity:0;transform:scale(.96);transition:.65s var(--ease);pointer-events:none}
+  .t-slide.active{opacity:1;transform:none;pointer-events:auto}
+  .t-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2.7rem 2.3rem;text-align:center}
+  .t-quote{width:54px;height:54px;margin:0 auto 1.15rem;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;box-shadow:0 14px 34px -10px rgba(99,102,241,.6)}
+  .t-quote svg{width:24px;height:24px}
+  .stars{display:flex;justify-content:center;gap:.28rem;color:var(--amber);margin-bottom:1.05rem}
+  .stars svg{width:18px;height:18px}
+  .t-text{font-size:1.1rem;font-weight:500;line-height:2.1;margin-bottom:1.6rem}
+  .t-person{display:flex;align-items:center;justify-content:center;gap:.95rem}
+  .t-avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1.15rem;background:var(--grad);color:#fff;flex-shrink:0}
+  .t-name{font-weight:800;font-size:.98rem;line-height:1.5}
+  .t-role{font-size:.8rem;color:var(--muted);font-weight:600}
+  .t-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text-2);display:grid;place-items:center;transition:.3s;z-index:5}
+  .t-nav:hover{background:var(--grad);color:#fff;border-color:transparent}
+  .t-nav svg{width:20px;height:20px}
+  .t-prev{inset-inline-start:-72px}
+  .t-next{inset-inline-end:-72px}
+  .t-dots{display:flex;justify-content:center;gap:.5rem;margin-top:1.9rem}
+  .t-dot{width:9px;height:9px;border-radius:99px;background:var(--surface-2);border:1px solid var(--border);transition:.35s;padding:0}
+  .t-dot.active{width:28px;background:var(--grad);border-color:transparent}
+
+  /* ============ تواصل معنا ============ */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:2.4rem;align-items:start}
+  .c-cards{display:grid;gap:1rem}
+  .c-card{display:flex;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.05rem 1.25rem;transition:.3s}
+  .c-card:hover{border-color:rgba(34,211,238,.4);transform:translateX(-5px)}
+  .c-ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.25);color:var(--primary);flex-shrink:0}
+  .c-ic svg{width:22px;height:22px}
+  .c-card h4{font-size:.95rem;font-weight:800;line-height:1.6}
+  .c-card p,.c-card a{font-size:.88rem;color:var(--text-2);line-height:1.7;word-break:break-word}
+  .c-card a:hover{color:var(--primary)}
+  .contact-form{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2.3rem}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  .field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.05rem}
+  .field label{font-size:.88rem;color:var(--text-2);font-weight:700}
+  .field input,.field select,.field textarea{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:.85rem 1.05rem;color:var(--text);font:inherit;font-size:.95rem;transition:border-color .3s,box-shadow .3s;width:100%}
+  .field textarea{resize:vertical;min-height:130px}
+  .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364708c' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 1rem center;cursor:pointer}
+  .field select option{background:#0b1120;color:var(--text)}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(34,211,238,.14);outline:none}
+  .form-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.3rem}
+  .form-note{font-size:.8rem;color:var(--muted);margin-top:1rem}
+
+  /* ============ الفوتر ============ */
+  .footer{border-top:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.013),transparent);padding-top:4.5rem;position:relative;overflow:hidden}
+  .footer::before{content:'';position:absolute;top:-190px;left:50%;transform:translateX(-50%);width:620px;height:320px;background:radial-gradient(ellipse,rgba(99,102,241,.14),transparent 68%);pointer-events:none}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.25fr;gap:2.6rem;padding-bottom:3.2rem;position:relative}
+  .footer h4{font-size:1.02rem;font-weight:800;margin-bottom:1.25rem}
+  .footer-desc{color:var(--text-2);font-size:.92rem;margin:1.1rem 0 1.5rem;max-width:310px}
+  .footer-links li{margin-bottom:.65rem}
+  .footer-links a{color:var(--text-2);font-size:.92rem;transition:.3s;display:inline-flex;align-items:center;gap:.5rem}
+  .footer-links a::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--primary);opacity:.4;transition:.3s}
+  .footer-links a:hover{color:var(--primary)}
+  .footer-links a:hover::before{opacity:1}
+  .social{display:flex;gap:.7rem}
+  .social a{width:41px;height:41px;border-radius:12px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text-2);transition:.3s}
+  .social a:hover{background:var(--grad);color:#fff;transform:translateY(-4px);border-color:transparent}
+  .social svg{width:18px;height:18px}
+  .f-contact li{display:flex;gap:.7rem;align-items:center;color:var(--text-2);font-size:.92rem;margin-bottom:.8rem}
+  .f-contact svg{width:18px;height:18px;color:var(--primary);flex-shrink:0}
+  .footer-bottom{border-top:1px solid var(--border);padding:1.4rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-size:.84rem;color:var(--muted);position:relative}
+
+  /* ============ عناصر عائمة ============ */
+  .wa-float{position:fixed;bottom:22px;inset-inline-end:22px;z-index:90;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 12px 32px -8px rgba(37,211,102,.65);transition:transform .3s}
+  .wa-float:hover{transform:scale(1.12)}
+  .wa-float::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);animation:ping 2.1s ease-out infinite}
+  .wa-float svg{width:27px;height:27px}
+  .to-top{position:fixed;bottom:30px;inset-inline-start:24px;z-index:90;width:44px;height:44px;border-radius:13px;background:rgba(10,16,29,.75);border:1px solid var(--border);color:var(--text-2);display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(14px);transition:.35s var(--ease);backdrop-filter:blur(10px)}
+  .to-top.show{opacity:1;visibility:visible;transform:none}
+  .to-top:hover{background:var(--grad);color:#fff;border-color:transparent}
+  .to-top svg{width:20px;height:20px}
+  .toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,150%);z-index:200;display:flex;align-items:center;gap:.7rem;background:rgba(10,16,30,.96);border:1px solid var(--border);backdrop-filter:blur(14px);padding:.9rem 1.4rem;border-radius:14px;font-weight:700;font-size:.9rem;transition:.45s var(--ease);box-shadow:0 20px 50px -12px rgba(0,0,0,.75);max-width:calc(100vw - 2rem)}
+  .toast.show{transform:translate(-50%,0)}
+  .toast svg{width:21px;height:21px;color:var(--ok);flex-shrink:0}
+  .toast.error svg{color:var(--err)}
+  .toast.error{border-color:rgba(248,113,113,.4)}
+
+  /* ============ أنيميشن الظهور ============ */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+  .rd1{transition-delay:.12s}.rd2{transition-delay:.24s}.rd3{transition-delay:.36s}
+  html.no-js .reveal,html.no-js .cl{opacity:1;transform:none}
+
+  /* ============ الاستجابة ============ */
+  @media (max-width:1024px){
+    .nav-links,.nav-cta{display:none}
+    .nav-toggle{display:flex}
+    .services-grid,.works-grid{grid-template-columns:repeat(2,1fr)}
+    .why-grid{grid-template-columns:1fr;gap:4rem}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .contact-grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .t-prev{inset-inline-start:8px}
+    .t-next{inset-inline-end:8px}
+    .fb-3{display:none}
+    .why-content .section-head{text-align:center}
+  }
+  @media (max-width:640px){
+    .section{padding:80px 0}
+    .services-grid,.works-grid,.steps,.why-list,.form-row,.footer-grid{grid-template-columns:1fr}
+    .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.4rem}
+    .scroll-hint{display:none}
+    .t-text{font-size:.98rem}
+    .t-card{padding:2rem 1.4rem}
+    .contact-form{padding:1.6rem}
+    .hero{padding-top:calc(var(--nav-h) + 2rem)}
+    .footer-bottom{justify-content:center;text-align:center}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    html{scroll-behavior:auto}
+    .reveal,.cl{opacity:1;transform:none}
+    .marquee-track{animation:none}
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ===== شريط التنقل ===== -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="المطور — الصفحة الرئيسية">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="brandGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#22d3ee"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+          <rect x="1.5" y="1.5" width="45" height="45" rx="12" stroke="url(#brandGrad)" stroke-width="3"/>
+          <path d="M18.5 17.5 11 24l7.5 6.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M29.5 17.5 37 24l-7.5 6.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M26.5 14.5 21.5 33.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" opacity=".65"/>
+        </svg>
+        <span class="brand-txt">المطور<span>للحلول الرقمية</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+        <a href="#home" class="active">الرئيسية</a>
+        <a href="#services">خدماتنا</a>
+        <a href="#portfolio">أعمالنا</a>
+        <a href="#why">لماذا نحن</a>
+        <a href="#testimonials">آراء العملاء</a>
+        <a href="#contact">تواصل معنا</a>
+      </nav>
+      <a href="#contact" class="btn btn-primary btn-sm nav-cta">اطلب مشروعك</a>
+      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== قائمة الجوال ===== -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" style="--i:0">الرئيسية</a>
+    <a href="#services" style="--i:1">خدماتنا</a>
+    <a href="#portfolio" style="--i:2">أعمالنا</a>
+    <a href="#why" style="--i:3">لماذا نحن</a>
+    <a href="#testimonials" style="--i:4">آراء العملاء</a>
+    <a href="#contact" style="--i:5">تواصل معنا</a>
+    <a href="#contact" class="btn btn-primary" style="--i:6;margin-top:.6rem">اطلب مشروعك الآن</a>
+  </div>
+
+  <!-- ===== الهيرو ===== -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <canvas id="particles" aria-hidden="true"></canvas>
+    <div class="container hero-content">
+      <span class="badge reveal"><span class="dot"></span> متاحون لمشاريع جديدة — وكالة رقمية متكاملة</span>
+      <h1 class="hero-title reveal rd1">نحوّل فكرتك إلى <span class="grad-text">حل رقمي</span><br>يصنع الفرق لأعمالك</h1>
+      <p class="typed-line reveal rd2"><span class="static">متخصصون في بناء</span> <span class="typed" id="typed">مواقع إلكترونية</span><span class="cursor" aria-hidden="true"></span></p>
+      <p class="hero-sub reveal rd2">فريق متكامل من المطورين والمصممين نصنع لك منتجات رقمية بتصميم عصري وأداء فائق — من الفكرة وحتى الإطلاق والدعم المستمر.</p>
+      <div class="hero-cta reveal rd3">
+        <a href="#contact" class="btn btn-primary btn-lg">
+          ابدأ مشروعك الآن
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg>
+        </a>
+        <a href="#portfolio" class="btn btn-ghost btn-lg">استعرض أعمالنا</a>
+      </div>
+      <div class="hero-stats reveal rd3">
+        <div class="stat"><span class="stat-num grad-text" data-count="150" data-suffix="+">150+</span><span class="stat-label">مشروع منجز</span></div>
+        <div class="stat"><span class="stat-num grad-text" data-count="90" data-suffix="+">90+</span><span class="stat-label">عميل سعيد</span></div>
+        <div class="stat"><span class="stat-num grad-text" data-count="7" data-suffix="+">7+</span><span class="stat-label">سنوات خبرة</span></div>
+        <div class="stat"><span class="stat-num grad-text" data-count="98" data-suffix="%">98%</span><span class="stat-label">نسبة الرضا</span></div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="mouse"></div>
+      <span>اسحب للأسفل</span>
+    </div>
+  </section>
+
+  <!-- ===== شريط الكلمات المتحرك ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span class="m-item">مواقع إلكترونية</span><span class="m-sep"></span>
+        <span class="m-item">متاجر إلكترونية</span><span class="m-sep"></span>
+        <span class="m-item">أنظمة إدارية</span><span class="m-sep"></span>
+        <span class="m-item">تصميم UI/UX</span><span class="m-sep"></span>
+        <span class="m-item">استضافة وحماية</span><span class="m-sep"></span>
+        <span class="m-item">تحسين محركات البحث</span><span class="m-sep"></span>
+        <span class="m-item">دعم فني 24/7</span><span class="m-sep"></span>
+        <span class="m-item">تطبيقات ويب متقدمة</span><span class="m-sep"></span>
+      </div>
+      <div class="marquee-group">
+        <span class="m-item">مواقع إلكترونية</span><span class="m-sep"></span>
+        <span class="m-item">متاجر إلكترونية</span><span class="m-sep"></span>
+        <span class="m-item">أنظمة إدارية</span><span class="m-sep"></span>
+        <span class="m-item">تصميم UI/UX</span><span class="m-sep"></span>
+        <span class="m-item">استضافة وحماية</span><span class="m-sep"></span>
+        <span class="m-item">تحسين محركات البحث</span><span class="m-sep"></span>
+        <span class="m-item">دعم فني 24/7</span><span class="m-sep"></span>
+        <span class="m-item">تطبيقات ويب متقدمة</span><span class="m-sep"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== الخدمات ===== -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">خدماتنا</span>
+        <h2 class="section-title">كل ما تحتاجه <span class="grad-text">لتتألق رقمياً</span></h2>
+        <p class="section-desc">من الفكرة إلى الإطلاق، نقدم منظومة خدمات متكاملة تغطي كل جوانب حضورك الرقمي.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"/></svg>
+          </div>
+          <h3>مواقع إلكترونية</h3>
+          <p>مواقع شركات وصفحات هبوط ومدونات بتصميم عصري متجاوب وسرعة تحميل فائقة تعكس هوية علامتك.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+        <article class="service-card reveal rd1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          </div>
+          <h3>متاجر إلكترونية</h3>
+          <p>متاجر متكاملة مع بوابات دفع آمنة، إدارة مخزون، وتجربة شراء سلسة ترفع معدلات مبيعاتك.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+        <article class="service-card reveal rd2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          </div>
+          <h3>أنظمة إدارية</h3>
+          <p>أنظمة ERP وCRM وإدارة عيادات ومخازن وفواتير مبنية خصيصاً لتناسب سير عمل مؤسستك.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <h3>تصميم UI/UX</h3>
+          <p>واجهات جذابة وتجربة استخدام مدروسة بعناية تجعل عميلك يستمتع ويعود مرة بعد مرة.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+        <article class="service-card reveal rd1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+          </div>
+          <h3>استضافة وحماية</h3>
+          <p>استضافة سريعة وموثوقة، شهادات أمان SSL، ونسخ احتياطي تلقائي لموقعك على مدار الساعة.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+        <article class="service-card reveal rd2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+          </div>
+          <h3>تحسين محركات البحث</h3>
+          <p>نرفع ترتيب موقعك في نتائج البحث ونزيد زياراتك المستهدفة وفرص البيع والنمو.</p>
+          <a href="#contact" class="service-more">اطلب الخدمة <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الأعمال ===== -->
+  <section class="section section-alt" id="portfolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">أعمالنا</span>
+        <h2 class="section-title">مشاريع <span class="grad-text">نفخر بها</span></h2>
+        <p class="section-desc">نماذج مختارة من مشاريع نفذناها لعملائنا في مختلف المجالات.</p>
+      </div>
+      <div class="filter-bar reveal" role="group" aria-label="تصفية الأعمال">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="web">مواقع إلكترونية</button>
+        <button class="filter-btn" data-filter="store">متاجر إلكترونية</button>
+        <button class="filter-btn" data-filter="system">أنظمة إدارية</button>
+      </div>
+      <div class="works-grid" id="worksGrid">
+        <article class="work-card reveal" data-cat="web">
+          <div class="work-thumb">
+            <span class="work-tag">موقع إلكتروني</span>
+            <img src="assets/work-realestate.png" alt="منصة سكني العقارية" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>منصة سكني العقارية</h3><span>عرض وبيع العقارات مع بحث متقدم</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+        <article class="work-card reveal rd1" data-cat="web">
+          <div class="work-thumb">
+            <span class="work-tag">موقع إلكتروني</span>
+            <img src="assets/work-restaurant.png" alt="موقع مطعم زيتونة" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>مطعم زيتونة</h3><span>موقع فاخر مع حجز الطاولات والمنيو</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+        <article class="work-card reveal rd2" data-cat="store">
+          <div class="work-thumb">
+            <span class="work-tag">متجر إلكتروني</span>
+            <img src="assets/work-fashion.png" alt="متجر أناقة للأزياء" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>متجر أناقة للأزياء</h3><span>متجر أزياء متكامل مع دفع إلكتروني</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+        <article class="work-card reveal" data-cat="store">
+          <div class="work-thumb">
+            <span class="work-tag">متجر إلكتروني</span>
+            <img src="assets/work-electronics.png" alt="متجر تك ستور للإلكترونيات" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>تك ستور للإلكترونيات</h3><span>متجر إلكترونيات مع عروض وخصومات</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+        <article class="work-card reveal rd1" data-cat="system">
+          <div class="work-thumb">
+            <span class="work-tag">نظام إداري</span>
+            <img src="assets/work-inventory.png" alt="نظام مخزني لإدارة المخازن" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>نظام مخزني</h3><span>إدارة المخزون والفواتير والتقارير</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+        <article class="work-card reveal rd2" data-cat="system">
+          <div class="work-thumb">
+            <span class="work-tag">نظام إداري</span>
+            <img src="assets/work-clinic.png" alt="نظام شفاء لإدارة العيادات" loading="lazy">
+            <div class="work-overlay"><a href="#contact" class="btn btn-primary btn-sm">اطلب مشروعاً مماثلاً</a></div>
+          </div>
+          <div class="work-info">
+            <div><h3>نظام شفاء للعيادات</h3><span>مواعيد وملفات مرضى وفواتير</span></div>
+            <span class="work-arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20l-8-8 8-8 1.41 1.41L7.83 11H20v2H7.83l5.58 5.59z"/></svg></span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== لماذا نحن ===== -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-content">
+          <div class="section-head reveal">
+            <span class="kicker">لماذا المطور؟</span>
+            <h2 class="section-title">شريكك التقني <span class="grad-text">الموثوق</span></h2>
+            <p class="why-lead">لا ننفذ مشاريع فحسب — نبني علاقات طويلة الأمد، ونحرص أن يكون كل مشروع قصة نجاح تُروى عنك.</p>
+          </div>
+          <div class="why-list">
+            <div class="feat reveal">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></span>
+              <div><h4>كود نظيف وقابل للتوسع</h4><p>بنية برمجية احترافية تنمو مع أعمالك دون مشاكل.</p></div>
+            </div>
+            <div class="feat reveal rd1">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+              <div><h4>أداء وسرعة فائقة</h4><p>نتائج ممتازة في اختبارات الأداء وتجربة انسيابية.</p></div>
+            </div>
+            <div class="feat reveal rd2">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z"/></svg></span>
+              <div><h4>تصميم متجاوب بالكامل</h4><p>تجربة مثالية على الجوال والتابلت والكمبيوتر.</p></div>
+            </div>
+            <div class="feat reveal rd3">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></span>
+              <div><h4>أمان وحماية متقدمة</h4><p>أعلى معايير الحماية ونسخ احتياطي دوري لبياناتك.</p></div>
+            </div>
+            <div class="feat reveal rd2">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg></span>
+              <div><h4>دعم فني مستمر</h4><p>فريق دعم جاهز لمساعدتك على مدار الساعة.</p></div>
+            </div>
+            <div class="feat reveal rd3">
+              <span class="feat-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
+              <div><h4>التزام بالمواعيد</h4><p>خطة عمل واضحة وتسليم في الوقت المحدد.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="why-visual reveal rd1">
+          <div class="float-badge fb-1">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            PageSpeed 98/100
+          </div>
+          <div class="float-badge fb-3">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z"/></svg>
+            متجاوب مع كل الأجهزة
+          </div>
+          <div class="float-badge fb-2">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            حماية وأمان متقدم
+          </div>
+          <div class="code-window" id="codeWindow">
+            <div class="code-head">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="code-title">project.js</span>
+            </div>
+            <div class="code-body">
+<span class="cl"><span class="tok-c">// رؤيتك… وكودنا</span></span>
+<span class="cl"><span class="tok-k">const</span> project = <span class="tok-k">await</span> <span class="tok-f">almutawer</span>.<span class="tok-f">build</span>({</span>
+<span class="cl">  idea: <span class="tok-s">"your-vision"</span>,</span>
+<span class="cl">  design: <span class="tok-s">"modern & responsive"</span>,</span>
+<span class="cl">  performance: <span class="tok-n">100</span>,</span>
+<span class="cl">  security: <span class="tok-s">"enterprise"</span>,</span>
+<span class="cl">  support: <span class="tok-s">"24/7"</span></span>
+<span class="cl">});</span>
+<span class="cl"><span class="tok-k">return</span> <span class="tok-f">success</span>; <span class="caret"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== خطوات العمل ===== -->
+  <section class="section section-alt" id="process">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">منهجية العمل</span>
+        <h2 class="section-title">رحلة مشروعك <span class="grad-text">معنا</span></h2>
+        <p class="section-desc">خطوات واضحة ومدروسة من أول تواصل حتى الإطلاق وما بعده.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="step-num grad-text">01</span>
+          <span class="step-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg></span>
+          <h3>نفهم متطلباتك</h3>
+          <p>نستمع لفكرتك وأهدافك ونحلل احتياجات مشروعك بدقة.</p>
+        </div>
+        <div class="step reveal rd1">
+          <span class="step-num grad-text">02</span>
+          <span class="step-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+          <h3>نصمم ونخطط</h3>
+          <p>نضع مخططات الواجهات والتجربة ونوافقك عليها قبل التنفيذ.</p>
+        </div>
+        <div class="step reveal rd2">
+          <span class="step-num grad-text">03</span>
+          <span class="step-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></span>
+          <h3>نطور وننفذ</h3>
+          <p>نحوّل التصاميم إلى منتج رقمي حي بكود نظيف واختبارات دقيقة.</p>
+        </div>
+        <div class="step reveal rd3">
+          <span class="step-num grad-text">04</span>
+          <span class="step-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6z"/></svg></span>
+          <h3>نطلق وندعم</h3>
+          <p>نجهز الإطلاق ونتابع الأداء ونقدم الدعم الفني المستمر.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== آراء العملاء ===== -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">آراء عملائنا</span>
+        <h2 class="section-title">ماذا <span class="grad-text">يقولون عنا؟</span></h2>
+        <p class="section-desc">ثقة عملائنا هي أغلى ما نملك — هذه بعض تجاربهم معنا.</p>
+      </div>
+      <div class="t-slider reveal" id="tSlider">
+        <button class="t-nav t-prev" id="tPrev" aria-label="السابق">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+        <button class="t-nav t-next" id="tNext" aria-label="التالي">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <div class="t-viewport" id="tViewport">
+          <div class="t-slide active">
+            <div class="t-card">
+              <span class="t-quote"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg></span>
+              <div class="stars" aria-label="تقييم 5 من 5">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="t-text">"اشتغلوا معانا على نظام إدارة المخازن من الصفر، والنتيجة فاقت كل توقعاتنا. فريق محترف، منظم، وملتزم بالمواعيد."</p>
+              <div class="t-person">
+                <span class="t-avatar">أ</span>
+                <div class="t-namewrap"><div class="t-name">أحمد محمد</div><div class="t-role">المدير التنفيذي — شركة النيل للتجارة</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="t-slide">
+            <div class="t-card">
+              <span class="t-quote"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg></span>
+              <div class="stars" aria-label="تقييم 5 من 5">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="t-text">"المتجر اللي طوروه لينا ضاعف مبيعاتنا خلال ثلاثة شهور فقط. تجربة شراء سلسة ودعم فني سريع جداً."</p>
+              <div class="t-person">
+                <span class="t-avatar">س</span>
+                <div class="t-namewrap"><div class="t-name">سارة أحمد</div><div class="t-role">مؤسسة متجر أناقة</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="t-slide">
+            <div class="t-card">
+              <span class="t-quote"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg></span>
+              <div class="stars" aria-label="تقييم 5 من 5">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="t-text">"موقعنا الجديد صار أسرع بكتير، ووصلنا لأول نتائج البحث في جوجل خلال أشهر. استثمار يستحق كل قرش."</p>
+              <div class="t-person">
+                <span class="t-avatar">م</span>
+                <div class="t-namewrap"><div class="t-name">محمد الطيب</div><div class="t-role">مدير التسويق — منصة سكني</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="t-slide">
+            <div class="t-card">
+              <span class="t-quote"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg></span>
+              <div class="stars" aria-label="تقييم 5 من 5">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+              <p class="t-text">"نظام إدارة العيادات وفّر علينا ساعات عمل يومياً في الحجوزات والفواتير. تدريب الفريق كان ممتاز والتعامل راقي."</p>
+              <div class="t-person">
+                <span class="t-avatar">ه</span>
+                <div class="t-namewrap"><div class="t-name">د. هبة عثمان</div><div class="t-role">مديرة عيادة شفاء</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="t-dots" id="tDots" role="tablist" aria-label="التنقل بين الآراء"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== تواصل معنا ===== -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">تواصل معنا</span>
+        <h2 class="section-title">جاهز لبدء <span class="grad-text">مشروعك؟</span></h2>
+        <p class="section-desc">أرسل لنا تفاصيل مشروعك وسيتواصل معك فريقنا خلال 24 ساعة.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="c-cards reveal">
+          <div class="c-card">
+            <span class="c-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+            <div><h4>واتساب</h4><a href="https://wa.me/249901234567?text=مرحباً، أريد التحدث معكم حول مشروع جديد." target="_blank" rel="noopener">+249 90 123 4567</a></div>
+          </div>
+          <div class="c-card">
+            <span class="c-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+            <div><h4>البريد الإلكتروني</h4><a href="mailto:info@almutawer.sd">info@almutawer.sd</a></div>
+          </div>
+          <div class="c-card">
+            <span class="c-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>
+            <div><h4>الموقع</h4><p>أم درمان — الخرطوم، السودان</p></div>
+          </div>
+          <div class="c-card">
+            <span class="c-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
+            <div><h4>ساعات العمل</h4><p>السبت — الخميس: 9 صباحاً حتى 6 مساءً</p></div>
+          </div>
+        </div>
+        <form class="contact-form reveal rd1" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="fName">الاسم الكامل</label>
+              <input type="text" id="fName" name="name" placeholder="مثال: محمد أحمد" required>
+            </div>
+            <div class="field">
+              <label for="fContact">رقم الجوال أو البريد</label>
+              <input type="text" id="fContact" name="contact" placeholder="كيف نتواصل معك؟" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="fType">نوع الخدمة</label>
+            <select id="fType" name="type" required>
+              <option value="" selected disabled>اختر نوع الخدمة…</option>
+              <option>موقع إلكتروني</option>
+              <option>متجر إلكتروني</option>
+              <option>نظام إداري</option>
+              <option>تصميم UI/UX</option>
+              <option>خدمة أخرى</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fMsg">تفاصيل المشروع</label>
+            <textarea id="fMsg" name="message" placeholder="احكِ لنا عن فكرتك، أهدافك، وأي تفاصيل مهمة…" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg">
+              أرسل الطلب
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true" style="transform:scaleX(-1)"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+            <a href="https://wa.me/249901234567?text=مرحباً، أريد التحدث معكم حول مشروع جديد." target="_blank" rel="noopener" class="btn btn-wa">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              أو تحدث معنا مباشرة
+            </a>
+          </div>
+          <p class="form-note">بإرسالك الطلب أنت توافق على أن يتواصل معك فريقنا عبر البيانات التي قدمتها.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الفوتر ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="brand" aria-label="المطور — الرئيسية">
+            <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <rect x="1.5" y="1.5" width="45" height="45" rx="12" stroke="url(#brandGrad)" stroke-width="3"/>
+              <path d="M18.5 17.5 11 24l7.5 6.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M29.5 17.5 37 24l-7.5 6.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M26.5 14.5 21.5 33.5" stroke="url(#brandGrad)" stroke-width="3.4" stroke-linecap="round" opacity=".65"/>
+            </svg>
+            <span class="brand-txt">المطور<span>للحلول الرقمية</span></span>
+          </a>
+          <p class="footer-desc">نبني مواقع ومتاجر وأنظمة إدارية تحوّل أفكارك إلى نجاح قابل للقياس — بتصميم عصري وكود احترافي.</p>
+          <div class="social">
+            <a href="#" aria-label="فيسبوك"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/></svg></a>
+            <a href="#" aria-label="إنستغرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+            <a href="#" aria-label="إكس"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+            <a href="#" aria-label="لينكدإن"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM7.119 20.452H3.554V9h3.565v11.452z"/></svg></a>
+            <a href="#" aria-label="جيت هاب"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h4>روابط سريعة</h4>
+          <ul class="footer-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#services">خدماتنا</a></li>
+            <li><a href="#portfolio">أعمالنا</a></li>
+            <li><a href="#why">لماذا نحن</a></li>
+            <li><a href="#testimonials">آراء العملاء</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>خدماتنا</h4>
+          <ul class="footer-links">
+            <li><a href="#services">مواقع إلكترونية</a></li>
+            <li><a href="#services">متاجر إلكترونية</a></li>
+            <li><a href="#services">أنظمة إدارية</a></li>
+            <li><a href="#services">تصميم UI/UX</a></li>
+            <li><a href="#services">استضافة وحماية</a></li>
+            <li><a href="#services">تحسين محركات البحث</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>تواصل معنا</h4>
+          <ul class="f-contact">
+            <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span dir="ltr">+249 90 123 4567</span></li>
+            <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg><span>info@almutawer.sd</span></li>
+            <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>أم درمان — الخرطوم، السودان</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> المطور للحلول الرقمية — جميع الحقوق محفوظة.</span>
+        <span>صُنع بشغف ❤ في السودان</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== عناصر عائمة ===== -->
+  <a href="https://wa.me/249901234567?text=مرحباً، أريد التحدث معكم حول مشروع جديد." class="wa-float" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+  </a>
+  <button class="to-top" id="toTop" aria-label="العودة للأعلى">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-8 8 1.41 1.41L11 7.83V20h2V7.83l5.59 5.58L20 12z"/></svg>
+  </button>
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script>
+  (function(){
+    'use strict';
+    document.documentElement.classList.remove('no-js');
+
+    var $ = function(s){ return document.querySelector(s); };
+    var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ===== سنة الفوتر ===== */
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ===== شريط التنقل عند التمرير ===== */
+    var nav = document.getElementById('nav');
+    var toTop = document.getElementById('toTop');
+    function onScroll(){
+      var y = window.scrollY || window.pageYOffset;
+      if (nav) nav.classList.toggle('scrolled', y > 40);
+      if (toTop) toTop.classList.toggle('show', y > 600);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    if (toTop) toTop.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    /* ===== قائمة الجوال ===== */
+    var navToggle = document.getElementById('navToggle');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMenu(){
+      document.body.classList.remove('menu-open');
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    if (navToggle && mobileMenu) {
+      navToggle.addEventListener('click', function(){
+        var open = mobileMenu.classList.toggle('open');
+        document.body.classList.toggle('menu-open', open);
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      $$('#mobileMenu a').forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+    }
+
+    /* ===== تمييز القسم النشط ===== */
+    var navLinks = $$('#navLinks a, #mobileMenu a');
+    var sections = $$('section[id]');
+    if ('IntersectionObserver' in window && sections.length) {
+      var secObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) {
+            var id = '#' + en.target.id;
+            navLinks.forEach(function(a){
+              a.classList.toggle('active', a.getAttribute('href') === id);
+            });
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach(function(s){ secObs.observe(s); });
+    }
+
+    /* ===== أنيميشن الظهور ===== */
+    var revealEls = $$('.reveal');
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      var revObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) {
+            en.target.classList.add('visible');
+            revObs.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function(el){ revObs.observe(el); });
+    } else {
+      revealEls.forEach(function(el){ el.classList.add('visible'); });
+    }
+
+    /* ===== عدّادات الإحصائيات ===== */
+    function animateCount(el){
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      var dur = 1800, t0 = null;
+      function tick(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * e) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    var statEls = $$('.stat-num');
+    if ('IntersectionObserver' in window) {
+      var cntObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) {
+            animateCount(en.target);
+            cntObs.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      statEls.forEach(function(el){ cntObs.observe(el); });
+    }
+
+    /* ===== تأثير الكتابة ===== */
+    var typedEl = document.getElementById('typed');
+    var words = ['مواقع إلكترونية', 'متاجر إلكترونية', 'أنظمة إدارية', 'تجارب رقمية مميزة'];
+    if (typedEl && !reduceMotion) {
+      var wi = 0, ci = 0, deleting = false;
+      (function typeLoop(){
+        var word = words[wi];
+        if (!deleting) {
+          ci++;
+          typedEl.textContent = word.slice(0, ci);
+          if (ci === word.length) {
+            deleting = true;
+            setTimeout(typeLoop, 2100);
+            return;
+          }
+          setTimeout(typeLoop, 95);
+        } else {
+          ci--;
+          typedEl.textContent = word.slice(0, ci);
+          if (ci === 0) {
+            deleting = false;
+            wi = (wi + 1) % words.length;
+            setTimeout(typeLoop, 450);
+            return;
+          }
+          setTimeout(typeLoop, 45);
+        }
+      })();
+    }
+
+    /* ===== جزيئات الهيرو ===== */
+    var canvas = document.getElementById('particles');
+    if (canvas && !reduceMotion && canvas.getContext) {
+      var ctx = canvas.getContext('2d');
+      var W = 0, H = 0, dpr = 1, pts = [], running = true, heroVisible = true;
+      var mouse = { x: -9999, y: -9999 };
+      var LINK = 130, MOUSE_LINK = 180;
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = canvas.clientWidth;
+        H = canvas.clientHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var n = Math.min(110, Math.floor((W * H) / 16000));
+        pts = [];
+        for (var i = 0; i < n; i++) {
+          pts.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.7 + 0.6,
+            cyan: Math.random() > 0.45
+          });
+        }
+      }
+
+      function step(){
+        if (running && heroVisible && !document.hidden) {
+          ctx.clearRect(0, 0, W, H);
+          var i, j, p, q, dx, dy, d, a;
+          for (i = 0; i < pts.length; i++) {
+            p = pts[i];
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < -20) p.x = W + 20; else if (p.x > W + 20) p.x = -20;
+            if (p.y < -20) p.y = H + 20; else if (p.y > H + 20) p.y = -20;
+          }
+          ctx.lineWidth = 1;
+          for (i = 0; i < pts.length; i++) {
+            p = pts[i];
+            for (j = i + 1; j < pts.length; j++) {
+              q = pts[j];
+              dx = p.x - q.x; dy = p.y - q.y;
+              if (Math.abs(dx) > LINK || Math.abs(dy) > LINK) continue;
+              d = Math.sqrt(dx * dx + dy * dy);
+              if (d < LINK) {
+                a = (1 - d / LINK) * 0.26;
+                ctx.strokeStyle = 'rgba(120,135,255,' + a.toFixed(3) + ')';
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.stroke();
+              }
+            }
+            dx = p.x - mouse.x; dy = p.y - mouse.y;
+            d = Math.sqrt(dx * dx + dy * dy);
+            if (d < MOUSE_LINK) {
+              a = (1 - d / MOUSE_LINK) * 0.45;
+              ctx.strokeStyle = 'rgba(34,211,238,' + a.toFixed(3) + ')';
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.stroke();
+            }
+          }
+          for (i = 0; i < pts.length; i++) {
+            p = pts[i];
+            ctx.fillStyle = p.cyan ? 'rgba(56,189,248,.85)' : 'rgba(165,150,255,.8)';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      var heroEl = document.getElementById('home');
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function(entries){
+          heroVisible = entries[0].isIntersecting;
+        }, { threshold: 0.02 }).observe(heroEl);
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', function(e){
+        var rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      }, { passive: true });
+      window.addEventListener('mouseout', function(){ mouse.x = -9999; mouse.y = -9999; });
+      resize();
+      requestAnimationFrame(step);
+    }
+
+    /* ===== توهج البطاقات مع حركة الماوس ===== */
+    $$('.service-card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    /* ===== أسطر الكود ===== */
+    var codeWindow = document.getElementById('codeWindow');
+    if (codeWindow) {
+      var lines = codeWindow.querySelectorAll('.cl');
+      if ('IntersectionObserver' in window && !reduceMotion) {
+        var codeObs = new IntersectionObserver(function(entries){
+          if (entries[0].isIntersecting) {
+            Array.prototype.forEach.call(lines, function(l, i){
+              setTimeout(function(){ l.classList.add('on'); }, i * 170);
+            });
+            codeObs.disconnect();
+          }
+        }, { threshold: 0.3 });
+        codeObs.observe(codeWindow);
+      } else {
+        Array.prototype.forEach.call(lines, function(l){ l.classList.add('on'); });
+      }
+    }
+
+    /* ===== تصفية الأعمال ===== */
+    var filterBtns = $$('.filter-btn');
+    var workCards = $$('#worksGrid .work-card');
+    filterBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        filterBtns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var f = btn.getAttribute('data-filter');
+        workCards.forEach(function(card){
+          var show = f === 'all' || card.getAttribute('data-cat') === f;
+          card.classList.toggle('hide', !show);
+          if (show) {
+            card.classList.remove('pop');
+            void card.offsetWidth;
+            card.classList.add('pop');
+          }
+        });
+      });
+    });
+
+    /* ===== سلايدر آراء العملاء ===== */
+    var slides = $$('#tViewport .t-slide');
+    var dotsWrap = document.getElementById('tDots');
+    var tPrev = document.getElementById('tPrev');
+    var tNext = document.getElementById('tNext');
+    var ti = 0, tTimer = null;
+    if (slides.length && dotsWrap) {
+      slides.forEach(function(_, i){
+        var dot = document.createElement('button');
+        dot.className = 't-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'الرأي ' + (i + 1));
+        dot.addEventListener('click', function(){ goT(i); restartT(); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = $$('#tDots .t-dot');
+      function goT(n){
+        slides[ti].classList.remove('active');
+        dots[ti].classList.remove('active');
+        ti = (n + slides.length) % slides.length;
+        slides[ti].classList.add('active');
+        dots[ti].classList.add('active');
+      }
+      function restartT(){
+        if (tTimer) clearInterval(tTimer);
+        if (!reduceMotion) tTimer = setInterval(function(){ goT(ti + 1); }, 6000);
+      }
+      if (tPrev) tPrev.addEventListener('click', function(){ goT(ti - 1); restartT(); });
+      if (tNext) tNext.addEventListener('click', function(){ goT(ti + 1); restartT(); });
+      var slider = document.getElementById('tSlider');
+      if (slider) {
+        slider.addEventListener('mouseenter', function(){ if (tTimer) clearInterval(tTimer); });
+        slider.addEventListener('mouseleave', restartT);
+        var touchX = null;
+        slider.addEventListener('touchstart', function(e){ touchX = e.touches[0].clientX; }, { passive: true });
+        slider.addEventListener('touchend', function(e){
+          if (touchX === null) return;
+          var dx = e.changedTouches[0].clientX - touchX;
+          if (Math.abs(dx) > 50) { dx > 0 ? goT(ti - 1) : goT(ti + 1); restartT(); }
+          touchX = null;
+        }, { passive: true });
+      }
+      restartT();
+    }
+
+    /* ===== التوست ===== */
+    var toast = document.getElementById('toast');
+    var toastMsg = document.getElementById('toastMsg');
+    var toastTimer = null;
+    function showToast(msg, isError){
+      if (!toast) return;
+      toastMsg.textContent = msg;
+      toast.classList.toggle('error', !!isError);
+      toast.classList.add('show');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 4200);
+    }
+
+    /* ===== نموذج التواصل ===== */
+    var form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var name = document.getElementById('fName');
+        var contact = document.getElementById('fContact');
+        var type = document.getElementById('fType');
+        var msg = document.getElementById('fMsg');
+        if (!name.value.trim() || name.value.trim().length < 2) {
+          showToast('فضلاً أدخل اسمك الكامل.', true);
+          name.focus();
+          return;
+        }
+        if (!contact.value.trim()) {
+          showToast('فضلاً أدخل رقم الجوال أو البريد لنتمكن من التواصل معك.', true);
+          contact.focus();
+          return;
+        }
+        if (!type.value) {
+          showToast('فضلاً اختر نوع الخدمة المطلوبة.', true);
+          type.focus();
+          return;
+        }
+        if (!msg.value.trim() || msg.value.trim().length < 10) {
+          showToast('اكتب لنا تفاصيل أكثر عن مشروعك (10 أحرف على الأقل).', true);
+          msg.focus();
+          return;
+        }
+        showToast('تم استلام طلبك بنجاح! سيتواصل معك فريقنا في أقرب وقت. 🚀');
+        form.reset();
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
