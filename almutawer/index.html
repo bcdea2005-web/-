@@ -320,11 +320,15 @@
 
   /* ===== نقطة التمرير المتوهجة ===== */
   .scroll-rail{position:fixed;top:50%;inset-inline-start:26px;transform:translateY(-50%);height:52vh;width:22px;z-index:85;pointer-events:none}
-  .rail-track{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;border-radius:2px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.16) 18%,rgba(255,255,255,.16) 82%,transparent)}
-  .rail-dot{position:absolute;top:0;left:50%;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 35%,#c9fbff,#22d3ee 45%,#6366f1);box-shadow:0 0 10px 2px rgba(34,211,238,.8),0 0 28px 7px rgba(99,102,241,.4)}
-  .rail-dot::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(34,211,238,.4);animation:ping 2.2s ease-out infinite}
-  .rail-dot::after{content:'';position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:3px;height:52px;border-radius:3px;background:linear-gradient(180deg,transparent,rgba(34,211,238,.5))}
-  @media (max-width:640px){.scroll-rail{display:none}}
+  .rail-track{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;border-radius:2px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.22) 18%,rgba(255,255,255,.22) 82%,transparent)}
+  .rail-dot{position:absolute;top:0;left:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 35%,#ffffff,#67e8f9 40%,#22d3ee 65%,#6366f1);box-shadow:0 0 14px 4px rgba(34,211,238,.85),0 0 42px 12px rgba(99,102,241,.5)}
+  .rail-dot::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(34,211,238,.45);animation:ping 2.2s ease-out infinite}
+  .rail-dot::after{content:'';position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:3px;height:58px;border-radius:3px;background:linear-gradient(180deg,transparent,rgba(34,211,238,.55))}
+  @media (max-width:640px){
+    .scroll-rail{inset-inline-start:10px;height:42vh}
+    .rail-dot{width:12px;height:12px}
+    .rail-dot::after{height:42px}
+  }
 
   /* ============ أنيميشن الظهور ============ */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
