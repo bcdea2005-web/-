@@ -15,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M26 22l-10 10 10 10M38 22l10 10-10 10' stroke='white' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800;900&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,7 +48,7 @@
     --err:#f87171;
     --radius:18px;
     --font:'Cairo','Segoe UI',Tahoma,system-ui,sans-serif;
-    --font-hero:'Alexandria','Cairo','Segoe UI',Tahoma,sans-serif;
+    --font-hero:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif;
     --container:1200px;
     --nav-h:74px;
     --ease:cubic-bezier(.22,.7,.3,1);
@@ -317,6 +317,14 @@
   .toast svg{width:21px;height:21px;color:var(--ok);flex-shrink:0}
   .toast.error svg{color:var(--err)}
   .toast.error{border-color:rgba(248,113,113,.4)}
+
+  /* ===== نقطة التمرير المتوهجة ===== */
+  .scroll-rail{position:fixed;top:50%;inset-inline-start:26px;transform:translateY(-50%);height:52vh;width:22px;z-index:85;pointer-events:none}
+  .rail-track{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;border-radius:2px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.16) 18%,rgba(255,255,255,.16) 82%,transparent)}
+  .rail-dot{position:absolute;top:0;left:50%;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 35%,#c9fbff,#22d3ee 45%,#6366f1);box-shadow:0 0 10px 2px rgba(34,211,238,.8),0 0 28px 7px rgba(99,102,241,.4)}
+  .rail-dot::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(34,211,238,.4);animation:ping 2.2s ease-out infinite}
+  .rail-dot::after{content:'';position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:3px;height:52px;border-radius:3px;background:linear-gradient(180deg,transparent,rgba(34,211,238,.5))}
+  @media (max-width:640px){.scroll-rail{display:none}}
 
   /* ============ أنيميشن الظهور ============ */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -1059,6 +1067,12 @@
     </div>
   </footer>
 
+  <!-- ===== نقطة التمرير المتوهجة ===== -->
+  <div class="scroll-rail" aria-hidden="true">
+    <div class="rail-track"></div>
+    <div class="rail-dot" id="railDot"></div>
+  </div>
+
   <!-- ===== عناصر عائمة ===== -->
   <a href="https://wa.me/249901234567?text=مرحباً، أريد التحدث معكم حول مشروع جديد." class="wa-float" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -1094,6 +1108,25 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /* ===== نقطة التمرير المتوهجة ===== */
+    var railDot = document.getElementById('railDot');
+    var railTarget = 0, railCurrent = 0, railRaf = null;
+    function railStep(){
+      railCurrent += (railTarget - railCurrent) * 0.14;
+      if (Math.abs(railTarget - railCurrent) < 0.0004) { railCurrent = railTarget; railRaf = null; }
+      else { railRaf = requestAnimationFrame(railStep); }
+      if (railDot) railDot.style.top = (railCurrent * 100) + '%';
+    }
+    function updateRail(){
+      var doc = document.documentElement;
+      var max = Math.max(0, doc.scrollHeight - window.innerHeight);
+      railTarget = max > 0 ? (window.scrollY || window.pageYOffset) / max : 0;
+      if (!railRaf) railRaf = requestAnimationFrame(railStep);
+    }
+    window.addEventListener('scroll', updateRail, { passive: true });
+    window.addEventListener('resize', updateRail);
+    updateRail();
 
     if (toTop) toTop.addEventListener('click', function(){
       window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
