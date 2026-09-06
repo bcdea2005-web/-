@@ -15,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M26 22l-10 10 10 10M38 22l10 10-10 10' stroke='white' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800;900&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,6 +48,7 @@
     --err:#f87171;
     --radius:18px;
     --font:'Cairo','Segoe UI',Tahoma,system-ui,sans-serif;
+    --font-hero:'Alexandria','Cairo','Segoe UI',Tahoma,sans-serif;
     --container:1200px;
     --nav-h:74px;
     --ease:cubic-bezier(.22,.7,.3,1);
@@ -105,14 +106,13 @@
   .mobile-menu .btn{font-size:1.05rem}
 
   /* ============ الهيرو ============ */
-  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 3.5rem) 0 5rem;overflow:hidden}
+  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 3.5rem) 0 5rem;overflow:hidden;font-family:var(--font-hero)}
   .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
   .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
   .orb-1{width:540px;height:540px;background:radial-gradient(circle,rgba(34,211,238,.34),transparent 65%);top:-160px;inset-inline-start:-140px;animation:drift 19s ease-in-out infinite alternate}
   .orb-2{width:640px;height:640px;background:radial-gradient(circle,rgba(99,102,241,.34),transparent 65%);bottom:-240px;inset-inline-end:-170px;animation:drift 23s ease-in-out infinite alternate-reverse}
   .orb-3{width:400px;height:400px;background:radial-gradient(circle,rgba(168,85,247,.24),transparent 65%);top:32%;inset-inline-start:44%;animation:drift 27s ease-in-out infinite alternate}
   @keyframes drift{to{transform:translate(70px,50px) scale(1.18)}}
-  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.038) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.038) 1px,transparent 1px);background-size:58px 58px;-webkit-mask-image:radial-gradient(ellipse 72% 62% at 50% 42%,#000 18%,transparent 72%);mask-image:radial-gradient(ellipse 72% 62% at 50% 42%,#000 18%,transparent 72%)}
   #particles{position:absolute;inset:0;width:100%;height:100%;z-index:1}
   .hero::after{content:'';position:absolute;inset-inline:0;bottom:0;height:170px;background:linear-gradient(180deg,transparent,var(--bg));z-index:1;pointer-events:none}
   .hero-content{position:relative;z-index:2;text-align:center;max-width:920px;margin-inline:auto}
@@ -469,7 +469,6 @@
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
       <div class="orb orb-3"></div>
-      <div class="hero-grid"></div>
     </div>
     <canvas id="particles" aria-hidden="true"></canvas>
     <div class="container hero-content">
