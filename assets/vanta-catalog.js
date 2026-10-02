@@ -1,0 +1,1421 @@
+/* ملف مولّد آليًا من catalog.json — لا تعدّله يدويًا */
+window.VANTA_CATALOG = {
+  "version": "1.0.0",
+  "settings": {
+    "currency": {
+      "code": "SAR",
+      "symbol": "ر.س",
+      "minorUnits": 2,
+      "name": "ريال سعودي"
+    },
+    "taxBps": 1500,
+    "taxLabel": "ضريبة القيمة المضافة (15%)",
+    "rushPctBps": 1500,
+    "rushLabel": "رسوم إنتاج عاجل (15%)",
+    "deliveryFee": 25000,
+    "deliveryLabel": "رسوم التوصيل",
+    "freeDeliveryThreshold": 300000,
+    "maxQty": 1000000,
+    "leadTimeDays": 7,
+    "leadTimeRushDays": 3,
+    "notes": "كل المبالغ مخزنة بالهللات (أصغر وحدة) كأعداد صحيحة. 25000 = 250.00"
+  },
+  "products": [
+    {
+      "id": "paper-bag",
+      "name": "كيس ورقي دعائي",
+      "tagline": "الخيار الأول للمعارض والمتاجر — كرافت أو أبيض أو أسود مطفي",
+      "unitLabel": "كيس",
+      "image": "assets/img/product-paper.jpg",
+      "badge": "الأكثر طلبًا",
+      "minQty": 100,
+      "qtyStep": 50,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 100,
+          "unitPrice": 320
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 275
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 235
+        },
+        {
+          "minQty": 5000,
+          "unitPrice": 195
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 20×10×25 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 25×12×32 سم",
+              "delta": 25
+            },
+            {
+              "id": "l",
+              "label": "كبير 32×12×40 سم",
+              "delta": 55
+            },
+            {
+              "id": "xl",
+              "label": "كبير جدًا 40×15×45 سم",
+              "delta": 95
+            }
+          ]
+        },
+        {
+          "id": "material",
+          "label": "نوع الورق",
+          "type": "single",
+          "required": true,
+          "default": "kraft120",
+          "options": [
+            {
+              "id": "kraft120",
+              "label": "كرافت بني 120 جم",
+              "delta": 0
+            },
+            {
+              "id": "white150",
+              "label": "أبيض 150 جم",
+              "delta": 30
+            },
+            {
+              "id": "black180",
+              "label": "أسود مطفي 180 جم",
+              "delta": 75
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "1c1s",
+          "options": [
+            {
+              "id": "1c1s",
+              "label": "لون واحد – وجه واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "2c1s",
+              "label": "لونان – وجه واحد",
+              "delta": 30,
+              "flat": 25000
+            },
+            {
+              "id": "1c2s",
+              "label": "لون واحد – وجهين",
+              "delta": 45,
+              "flat": 25000
+            },
+            {
+              "id": "cmyk2s",
+              "label": "ألوان كاملة CMYK – وجهين (رقمي)",
+              "delta": 95,
+              "flat": 0
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "label": "المقبض",
+          "type": "single",
+          "required": true,
+          "default": "cotton",
+          "options": [
+            {
+              "id": "diecut",
+              "label": "مقبض مقطوع (بدون حبل)",
+              "delta": 0
+            },
+            {
+              "id": "cotton",
+              "label": "حبل قطني",
+              "delta": 40
+            },
+            {
+              "id": "ribbon",
+              "label": "شريط ساتان",
+              "delta": 60
+            },
+            {
+              "id": "webbing",
+              "label": "شريط قماشي عريض",
+              "delta": 30
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "label": "التشطيب",
+          "type": "single",
+          "required": true,
+          "default": "none",
+          "options": [
+            {
+              "id": "none",
+              "label": "بدون",
+              "delta": 0
+            },
+            {
+              "id": "gloss",
+              "label": "تغليف لمعة",
+              "delta": 35
+            },
+            {
+              "id": "mattespot",
+              "label": "تغليف مطفي + سبوت UV",
+              "delta": 85
+            },
+            {
+              "id": "foil",
+              "label": "فويل ذهبي/فضي للشعار",
+              "delta": 120
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "logo2",
+              "label": "شعار إضافي",
+              "delta": 25
+            },
+            {
+              "id": "card",
+              "label": "بطاقة شكر مرفقة",
+              "delta": 45
+            },
+            {
+              "id": "wrap",
+              "label": "تغليف فردي لكل كيس",
+              "delta": 15
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 12000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plastic-bag",
+      "name": "كيس بلاستيك دعائي",
+      "tagline": "اقتصادي للكميات الكبيرة — تيشيرت باج، دي كت، سوفت لوب",
+      "unitLabel": "كيس",
+      "image": "assets/img/product-plastic.jpg",
+      "badge": "أوفر سعر",
+      "minQty": 500,
+      "qtyStep": 500,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 500,
+          "unitPrice": 95
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 78
+        },
+        {
+          "minQty": 5000,
+          "unitPrice": 62
+        },
+        {
+          "minQty": 10000,
+          "unitPrice": 48
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 25×35 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 30×40 سم",
+              "delta": 12
+            },
+            {
+              "id": "l",
+              "label": "كبير 40×50 سم",
+              "delta": 26
+            },
+            {
+              "id": "xl",
+              "label": "كبير جدًا 50×60 سم",
+              "delta": 42
+            }
+          ]
+        },
+        {
+          "id": "thickness",
+          "label": "السماكة",
+          "type": "single",
+          "required": true,
+          "default": "50",
+          "options": [
+            {
+              "id": "40",
+              "label": "40 ميكرون",
+              "delta": 0
+            },
+            {
+              "id": "50",
+              "label": "50 ميكرون",
+              "delta": 8
+            },
+            {
+              "id": "60",
+              "label": "60 ميكرون",
+              "delta": 16
+            },
+            {
+              "id": "80",
+              "label": "80 ميكرون (تحميل عالي)",
+              "delta": 34
+            }
+          ]
+        },
+        {
+          "id": "type",
+          "label": "نوع الكيس",
+          "type": "single",
+          "required": true,
+          "default": "tshirt",
+          "options": [
+            {
+              "id": "tshirt",
+              "label": "تيشيرت باج",
+              "delta": 0
+            },
+            {
+              "id": "dcut",
+              "label": "دي كت (مقبض مقطوع)",
+              "delta": 15
+            },
+            {
+              "id": "loop",
+              "label": "سوفت لوب (مقبض حلقي)",
+              "delta": 55
+            },
+            {
+              "id": "ziplock",
+              "label": "زيبلوك بقفل",
+              "delta": 40
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "1c1s",
+          "options": [
+            {
+              "id": "1c1s",
+              "label": "لون واحد – وجه واحد",
+              "delta": 0,
+              "flat": 18000
+            },
+            {
+              "id": "2c1s",
+              "label": "لونان – وجه واحد",
+              "delta": 18,
+              "flat": 30000
+            },
+            {
+              "id": "1c2s",
+              "label": "لون واحد – وجهين",
+              "delta": 26,
+              "flat": 30000
+            },
+            {
+              "id": "cmyk",
+              "label": "ألوان كاملة CMYK",
+              "delta": 55,
+              "flat": 0
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "gusset",
+              "label": "قاع/جانب مقوى",
+              "delta": 14
+            },
+            {
+              "id": "hanger",
+              "label": "ثقب تعليق",
+              "delta": 4
+            },
+            {
+              "id": "matte",
+              "label": "سطح مطفي",
+              "delta": 12
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 10000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nonwoven-bag",
+      "name": "حقيبة non-woven",
+      "tagline": "متينة وقابلة لإعادة الاستخدام — الأفضل للحملات التسويقية",
+      "unitLabel": "حقيبة",
+      "image": "assets/img/product-nonwoven.jpg",
+      "badge": "صداقة للبيئة",
+      "minQty": 100,
+      "qtyStep": 100,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 100,
+          "unitPrice": 520
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 450
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 395
+        },
+        {
+          "minQty": 5000,
+          "unitPrice": 340
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 25×30 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 30×35×10 سم",
+              "delta": 40
+            },
+            {
+              "id": "l",
+              "label": "كبير 40×35×12 سم",
+              "delta": 85
+            },
+            {
+              "id": "xl",
+              "label": "كبير جدًا 45×40×15 سم",
+              "delta": 140
+            }
+          ]
+        },
+        {
+          "id": "gsm",
+          "label": "وزن القماش",
+          "type": "single",
+          "required": true,
+          "default": "80",
+          "options": [
+            {
+              "id": "70",
+              "label": "70 جم/م²",
+              "delta": 0
+            },
+            {
+              "id": "80",
+              "label": "80 جم/م²",
+              "delta": 30
+            },
+            {
+              "id": "100",
+              "label": "100 جم/م²",
+              "delta": 75
+            },
+            {
+              "id": "120",
+              "label": "120 جم/م² (تحميل عالي)",
+              "delta": 130
+            }
+          ]
+        },
+        {
+          "id": "lamination",
+          "label": "التغليف",
+          "type": "single",
+          "required": true,
+          "default": "none",
+          "options": [
+            {
+              "id": "none",
+              "label": "بدون تغليف",
+              "delta": 0
+            },
+            {
+              "id": "gloss",
+              "label": "تغليف لمعة",
+              "delta": 55
+            },
+            {
+              "id": "matte",
+              "label": "تغليف مطفي",
+              "delta": 65
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "1c1s",
+          "options": [
+            {
+              "id": "1c1s",
+              "label": "لون واحد – وجه واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "2c1s",
+              "label": "لونان – وجه واحد",
+              "delta": 35,
+              "flat": 25000
+            },
+            {
+              "id": "1c2s",
+              "label": "لون واحد – وجهين",
+              "delta": 55,
+              "flat": 25000
+            },
+            {
+              "id": "cmyk2s",
+              "label": "ألوان كاملة CMYK – وجهين",
+              "delta": 120,
+              "flat": 0
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "label": "المقبض",
+          "type": "single",
+          "required": true,
+          "default": "webbing",
+          "options": [
+            {
+              "id": "webbing",
+              "label": "شريط قماشي (قياسي)",
+              "delta": 0
+            },
+            {
+              "id": "padded",
+              "label": "شريط مبطن",
+              "delta": 70
+            },
+            {
+              "id": "rope",
+              "label": "حبل قطني",
+              "delta": 45
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "pocket",
+              "label": "جيب خارجي",
+              "delta": 45
+            },
+            {
+              "id": "zipper",
+              "label": "سحّاب علوي",
+              "delta": 85
+            },
+            {
+              "id": "velcro",
+              "label": "قفل فيلكرو",
+              "delta": 35
+            },
+            {
+              "id": "label",
+              "label": "ليبل منسوج للشعار",
+              "delta": 30
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cotton-tote",
+      "name": "حقيبة قطنية / كانفس",
+      "tagline": "هدية فاخرة تدوم — مثالية للعلامات التي تهتم بالصورة",
+      "unitLabel": "حقيبة",
+      "image": "assets/img/product-cotton.jpg",
+      "badge": "فاخر",
+      "minQty": 50,
+      "qtyStep": 50,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 50,
+          "unitPrice": 1450
+        },
+        {
+          "minQty": 100,
+          "unitPrice": 1290
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 1150
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 990
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 30×35 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 38×42 سم",
+              "delta": 160
+            },
+            {
+              "id": "l",
+              "label": "كبير 45×50×12 سم",
+              "delta": 340
+            }
+          ]
+        },
+        {
+          "id": "fabric",
+          "label": "وزن القماش",
+          "type": "single",
+          "required": true,
+          "default": "10oz",
+          "options": [
+            {
+              "id": "6oz",
+              "label": "قطن خفيف 6 أونصة",
+              "delta": 0
+            },
+            {
+              "id": "10oz",
+              "label": "كانفس 10 أونصة",
+              "delta": 220
+            },
+            {
+              "id": "12oz",
+              "label": "كانفس ثقيل 12 أونصة",
+              "delta": 420
+            },
+            {
+              "id": "14oz",
+              "label": "كانفس فاخر 14 أونصة",
+              "delta": 650
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "طريقة الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "screen1",
+          "options": [
+            {
+              "id": "screen1",
+              "label": "سلك سكرين – لون واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "screen2",
+              "label": "سلك سكرين – لونان",
+              "delta": 120,
+              "flat": 25000
+            },
+            {
+              "id": "dtf",
+              "label": "DTF ألوان كاملة",
+              "delta": 260,
+              "flat": 0
+            },
+            {
+              "id": "embroidery",
+              "label": "تطريز الشعار",
+              "delta": 480,
+              "flat": 20000
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "label": "المقبض",
+          "type": "single",
+          "required": true,
+          "default": "long",
+          "options": [
+            {
+              "id": "long",
+              "label": "طويل – يُحمل على الكتف",
+              "delta": 0
+            },
+            {
+              "id": "short",
+              "label": "قصير – يُحمل باليد",
+              "delta": 0
+            },
+            {
+              "id": "leather",
+              "label": "مقبض جلد صناعي",
+              "delta": 290
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "pocket",
+              "label": "جيب داخلي",
+              "delta": 120
+            },
+            {
+              "id": "zipper",
+              "label": "سحّاب علوي",
+              "delta": 150
+            },
+            {
+              "id": "lining",
+              "label": "بطانة داخلية",
+              "delta": 240
+            },
+            {
+              "id": "label",
+              "label": "ليبل منسوج",
+              "delta": 45
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 20000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backpack",
+      "name": "حقيبة ظهر دعائية",
+      "tagline": "هدية عملية عالية القيمة للموظفين والفعاليات",
+      "unitLabel": "حقيبة",
+      "image": "assets/img/product-backpack.jpg",
+      "badge": "هدايا شركات",
+      "minQty": 50,
+      "qtyStep": 50,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 50,
+          "unitPrice": 3200
+        },
+        {
+          "minQty": 200,
+          "unitPrice": 2950
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 2700
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 2450
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "السعة",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 12 لتر",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 18 لتر",
+              "delta": 280
+            },
+            {
+              "id": "l",
+              "label": "كبير 25 لتر + جيب لابتوب",
+              "delta": 620
+            }
+          ]
+        },
+        {
+          "id": "material",
+          "label": "الخامة",
+          "type": "single",
+          "required": true,
+          "default": "poly600",
+          "options": [
+            {
+              "id": "poly600",
+              "label": "بوليستر 600D",
+              "delta": 0
+            },
+            {
+              "id": "poly900",
+              "label": "بوليستر 900D مقوى",
+              "delta": 420
+            },
+            {
+              "id": "nylon",
+              "label": "نايلون مقاوم للماء",
+              "delta": 780
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "screen1",
+          "options": [
+            {
+              "id": "screen1",
+              "label": "سلك سكرين – لون واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "transfer",
+              "label": "ترانسفير حراري – ألوان",
+              "delta": 210,
+              "flat": 0
+            },
+            {
+              "id": "embroidery",
+              "label": "تطريز الشعار",
+              "delta": 520,
+              "flat": 20000
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "padded",
+              "label": "أحزمة مبطنة",
+              "delta": 180
+            },
+            {
+              "id": "sidepocket",
+              "label": "جيوب جانبية",
+              "delta": 140
+            },
+            {
+              "id": "ykk",
+              "label": "سحّابات YKK أصلية",
+              "delta": 260
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 25000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jute-bag",
+      "name": "حقيبة جوت / خيش",
+      "tagline": "مظهر طبيعي مميز للماركات العضوية والمنتجات الفاخرة",
+      "unitLabel": "حقيبة",
+      "image": "assets/img/product-jute.jpg",
+      "badge": "طبيعي",
+      "minQty": 100,
+      "qtyStep": 50,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 100,
+          "unitPrice": 1900
+        },
+        {
+          "minQty": 300,
+          "unitPrice": 1700
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 1500
+        },
+        {
+          "minQty": 3000,
+          "unitPrice": 1350
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 25×25×12 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 30×30×15 سم",
+              "delta": 240
+            },
+            {
+              "id": "l",
+              "label": "كبير 40×35×18 سم",
+              "delta": 520
+            }
+          ]
+        },
+        {
+          "id": "lining",
+          "label": "البطانة الداخلية",
+          "type": "single",
+          "required": true,
+          "default": "none",
+          "options": [
+            {
+              "id": "none",
+              "label": "بدون بطانة",
+              "delta": 0
+            },
+            {
+              "id": "lam",
+              "label": "بطانة لامينيشن مقاومة للماء",
+              "delta": 260
+            },
+            {
+              "id": "cotton",
+              "label": "بطانة قطنية",
+              "delta": 380
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "screen1",
+          "options": [
+            {
+              "id": "screen1",
+              "label": "سلك سكرين – لون واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "screen2",
+              "label": "سلك سكرين – لونان",
+              "delta": 130,
+              "flat": 25000
+            },
+            {
+              "id": "leather",
+              "label": "باتش جلد محفور بالشعار",
+              "delta": 620,
+              "flat": 20000
+            }
+          ]
+        },
+        {
+          "id": "handle",
+          "label": "المقبض",
+          "type": "single",
+          "required": true,
+          "default": "cotton",
+          "options": [
+            {
+              "id": "cotton",
+              "label": "حبل قطني مبطن",
+              "delta": 0
+            },
+            {
+              "id": "pu",
+              "label": "مقبض جلد صناعي PU",
+              "delta": 320
+            },
+            {
+              "id": "rope",
+              "label": "حبل جوت مجدول",
+              "delta": 90
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "zipper",
+              "label": "سحّاب علوي",
+              "delta": 190
+            },
+            {
+              "id": "pocket",
+              "label": "جيب أمامي",
+              "delta": 160
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 22000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cooler-bag",
+      "name": "حقيبة حرارية (مبرد)",
+      "tagline": "هداية دعائية تُستخدم يوميًا — للمطاعم وماركات الأغذية",
+      "unitLabel": "حقيبة",
+      "image": "assets/img/product-cooler.jpg",
+      "badge": "عملي",
+      "minQty": 100,
+      "qtyStep": 100,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 100,
+          "unitPrice": 2600
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 2350
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 2100
+        },
+        {
+          "minQty": 5000,
+          "unitPrice": 1850
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "السعة",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 6 لتر",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 12 لتر",
+              "delta": 380
+            },
+            {
+              "id": "l",
+              "label": "كبير 20 لتر",
+              "delta": 780
+            }
+          ]
+        },
+        {
+          "id": "insulation",
+          "label": "العزل الحراري",
+          "type": "single",
+          "required": true,
+          "default": "pe",
+          "options": [
+            {
+              "id": "pe",
+              "label": "فوم PE + رقائق ألمنيوم",
+              "delta": 0
+            },
+            {
+              "id": "thick",
+              "label": "عزل سميك 8 مم",
+              "delta": 320
+            },
+            {
+              "id": "leakproof",
+              "label": "بطانة مانعة للتسرب (لحام)",
+              "delta": 480
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "screen1",
+          "options": [
+            {
+              "id": "screen1",
+              "label": "سلك سكرين – لون واحد",
+              "delta": 0,
+              "flat": 15000
+            },
+            {
+              "id": "transfer",
+              "label": "ترانسفير حراري – ألوان",
+              "delta": 240,
+              "flat": 0
+            },
+            {
+              "id": "embroidery",
+              "label": "تطريز الشعار",
+              "delta": 520,
+              "flat": 20000
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "strap",
+              "label": "حزام كتف قابل للفك",
+              "delta": 210
+            },
+            {
+              "id": "pocket",
+              "label": "جيب شبكي جانبي",
+              "delta": 150
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 25000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rigid-box",
+      "name": "علبة تغليف فاخرة",
+      "tagline": "تغليف صلب بتشطيبات راقية للهدايا والمنتجات المميزة",
+      "unitLabel": "علبة",
+      "image": "assets/img/product-box.jpg",
+      "badge": "تشطيبات فاخرة",
+      "minQty": 100,
+      "qtyStep": 50,
+      "setupFee": 0,
+      "tiers": [
+        {
+          "minQty": 100,
+          "unitPrice": 2900
+        },
+        {
+          "minQty": 500,
+          "unitPrice": 2500
+        },
+        {
+          "minQty": 1000,
+          "unitPrice": 2200
+        },
+        {
+          "minQty": 5000,
+          "unitPrice": 1900
+        }
+      ],
+      "groups": [
+        {
+          "id": "size",
+          "label": "المقاس",
+          "type": "single",
+          "required": true,
+          "default": "m",
+          "options": [
+            {
+              "id": "s",
+              "label": "صغير 15×15×8 سم",
+              "delta": 0
+            },
+            {
+              "id": "m",
+              "label": "وسط 25×20×10 سم",
+              "delta": 420
+            },
+            {
+              "id": "l",
+              "label": "كبير 35×25×12 سم",
+              "delta": 880
+            }
+          ]
+        },
+        {
+          "id": "structure",
+          "label": "الهيكل",
+          "type": "single",
+          "required": true,
+          "default": "fold",
+          "options": [
+            {
+              "id": "fold",
+              "label": "كرتون قابل للطي 350 جم",
+              "delta": 0
+            },
+            {
+              "id": "rigid",
+              "label": "علبة صلبة (rigid) 1200 جم",
+              "delta": 950
+            },
+            {
+              "id": "drawer",
+              "label": "علبة درج بشريط سحب",
+              "delta": 1350
+            }
+          ]
+        },
+        {
+          "id": "interior",
+          "label": "الداخل",
+          "type": "single",
+          "required": true,
+          "default": "none",
+          "options": [
+            {
+              "id": "none",
+              "label": "بدون",
+              "delta": 0
+            },
+            {
+              "id": "foam",
+              "label": "فوم مشكّل",
+              "delta": 620
+            },
+            {
+              "id": "velvet",
+              "label": "مخمل / ساتان",
+              "delta": 880
+            }
+          ]
+        },
+        {
+          "id": "print",
+          "label": "الطباعة",
+          "type": "single",
+          "required": true,
+          "default": "cmyk",
+          "options": [
+            {
+              "id": "cmyk",
+              "label": "أوفست CMYK + تغليف مطفي",
+              "delta": 0,
+              "flat": 35000
+            },
+            {
+              "id": "cmykfoil",
+              "label": "CMYK + فويل ذهبي للشعار",
+              "delta": 480,
+              "flat": 55000
+            }
+          ]
+        },
+        {
+          "id": "extras",
+          "label": "إضافات اختيارية",
+          "type": "multi",
+          "required": false,
+          "default": [],
+          "options": [
+            {
+              "id": "ribbon",
+              "label": "شريط ساتان مطبوع",
+              "delta": 190
+            },
+            {
+              "id": "card",
+              "label": "بطاقة إهداء",
+              "delta": 60
+            },
+            {
+              "id": "window",
+              "label": "نافذة PVC",
+              "delta": 240
+            },
+            {
+              "id": "emboss",
+              "label": "نقش بارز Emboss",
+              "delta": 320
+            },
+            {
+              "id": "sample",
+              "label": "عينة مطبوعة قبل الإنتاج",
+              "delta": 0,
+              "flat": 30000
+            },
+            {
+              "id": "design",
+              "label": "تصميم/تجهيز ملف الطباعة",
+              "delta": 0,
+              "flat": 25000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};

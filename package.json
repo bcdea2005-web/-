@@ -1,0 +1,16 @@
+{
+  "name": "vanta-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "موقع فانتا VANTA التعريفي مع نظام طلب آلي مرتبط بـ Google Sheets",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test tests/pricing.test.mjs tests/ui.test.mjs",
+    "test:pricing": "node --test tests/pricing.test.mjs",
+    "test:ui": "node --test tests/ui.test.mjs",
+    "start": "python3 -m http.server 8000 --bind 0.0.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0"
+  }
+}
