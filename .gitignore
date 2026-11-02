@@ -1,0 +1,9 @@
+# ملفات وسيطة ثقيلة (تُعاد بالبناء)
+video/tools/
+video/build/work/
+video/build/cards/
+video/build/cards_wide/
+video/build/frames*/
+video/build/cache/
+__pycache__/
+*.pyc
